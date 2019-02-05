@@ -1,0 +1,12 @@
+.BackgroundMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Thumbnail {
+  border: solid 1px white;
+  height: 50px;
+  width: 100px;
+}
