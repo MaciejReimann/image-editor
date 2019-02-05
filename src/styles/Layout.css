@@ -1,34 +1,52 @@
-.Layout {
+.layout {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 200px 400px 200px;
   grid-template-rows: 100px 400px 100px;
   grid-template-areas:
-    "sidemenu header tools"
-    "sidemenu editor tools"
+    ". header ."
+    "background-menu editor tools-menu"
     ". download save-load";
+  grid-gap: 10px;
+  position: relative;
 }
 
-.Layout > .Header {
+.header {
   grid-area: header;
+  padding-top: 70px;
 }
 
-.BackgroundMenu {
-  grid-area: sidemenu;
+.background-menu {
+  grid-area: background-menu;
+  display: grid;
+  justify-items: center;
+  position: relative;
 }
 
-.editor {
+.editor-window {
   grid-area: editor;
+  display: grid;
+  justify-items: center;
+  align-items: center;
 }
 
-.ToolsMenu {
-  grid-area: tools;
+.tools-menu {
+  grid-area: tools-menu;
+  display: grid;
+  justify-items: center;
+  position: relative;
 }
 
-.Download {
+.download {
   grid-area: download;
+  display: grid;
+  justify-items: center;
+  align-items: center;
 }
 
 .save-load {
   grid-area: save-load;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

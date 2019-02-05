@@ -1,5 +1,19 @@
-.LogoMenu {
-  display: grid;
-  justify-content: center;
-  align-content: center;
+.TextMenu {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-evenly;
+}
+
+.radios {
+  border: solid 1px white;
+  padding: 10px;
+}
+
+.radio {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 }

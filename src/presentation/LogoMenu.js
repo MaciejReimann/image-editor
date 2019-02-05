@@ -5,9 +5,12 @@ export default function LogoMenu() {
   return (
     <div className="LogoMenu">
       <div className="Header">Add Logo</div>
-      <div className="Logo" />
-      <div className="Logo" />
-      <div className="Logo" />
+      <div className="logos">
+        <div className="Logo" />
+        <div className="Logo" />
+        <div className="Logo" />
+        <div className="Logo" />
+      </div>
     </div>
   );
 }

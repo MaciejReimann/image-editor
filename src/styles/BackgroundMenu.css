@@ -1,11 +1,32 @@
 .BackgroundMenu {
+  height: 100%;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  position: relative;
+}
+
+.BackgroundMenu > .Header {
+  position: relative;
+  top: -30px;
+  color: white;
+}
+
+.thumbnails {
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  position: relative;
 }
 
 .Thumbnail {
+  position: relative;
+  /* top: -40px; */
   border: solid 1px white;
   height: 50px;
   width: 100px;
