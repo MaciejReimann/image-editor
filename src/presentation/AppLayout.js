@@ -1,0 +1,32 @@
+import React from "react";
+
+import BackgroundMenu from "./BackgroundMenu";
+import EditorWindow from "./EditorWindow";
+import ToolsMenu from "./ToolsMenu";
+
+import PrimaryButton from "../generic/PrimaryButton";
+import "../styles/Layout.css";
+
+export default function AppLayout() {
+  return (
+    <div className="layout">
+      <header className="header">Simple Editor</header>
+      <aside className="background-menu">
+        <BackgroundMenu />
+      </aside>
+      <main className="editor-window">
+        <EditorWindow width={400} height={400} />
+      </main>
+      <aside className="tools-menu">
+        <ToolsMenu />
+      </aside>
+      <div className="download">
+        <PrimaryButton label="Download" />
+      </div>
+      <div className="save-load">
+        <PrimaryButton label="Save" />
+        <PrimaryButton label="Load" />
+      </div>
+    </div>
+  );
+}
