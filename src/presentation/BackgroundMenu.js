@@ -6,7 +6,7 @@ import "../styles/BackgroundMenu.css";
 export default function BackgroundMenu({ onDeleteBackground }) {
   const thumbnails = Array(4)
     .fill()
-    .map((_, i) => <Thumbnail key={i} />);
+    .map((_, i) => <Thumbnail cls={"BackgroundThumbnail"} key={i} />);
   return (
     <div className="BackgroundMenu">
       <div className="Header">Select Background</div>
