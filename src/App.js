@@ -11,6 +11,7 @@ class App extends Component {
         "./assets/logo_two.png",
         "./assets/logo_three.png"
       ],
+      backgroundImageURL: "https://konvajs.github.io/assets/darth-vader.jpg",
       draggedImageURL: ""
     };
   }
@@ -24,6 +25,7 @@ class App extends Component {
     return (
       <div className="App ">
         <AppLayout
+          backgroundImageURL={this.state.backgroundImageURL}
           draggedImageURL={this.state.draggedImageURL}
           logos={this.state.logos}
           onDragEnd={this.handleLogoDrag}
