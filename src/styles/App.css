@@ -4,7 +4,3 @@
   display: grid;
   justify-content: center;
 }
-
-canvas {
-  border: solid 1px white;
-}

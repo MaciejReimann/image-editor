@@ -1,5 +1,7 @@
-import React from "react";
-import { Component } from "react";
+import React, { Component } from "react";
+import Konva from "konva";
+import { Stage, Layer, Rect, Text, Circle, Line } from "react-konva";
+import "../styles/EditorWindow.css";
 
 export default class EditorWindow extends Component {
   render() {
@@ -7,12 +9,16 @@ export default class EditorWindow extends Component {
     console.log(draggedImageURL);
     return (
       <div className="editor">
-        <canvas
+        <Stage
+          className="Editor"
           onDragEnter={e => console.log(draggedImageURL)}
-          ref="canvas"
           width={width}
           height={height}
-        />
+        >
+          <Layer>
+            <Text text="Some text on canvas" fontSize={15} />
+          </Layer>
+        </Stage>
       </div>
     );
   }
