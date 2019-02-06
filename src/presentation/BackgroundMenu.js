@@ -4,7 +4,9 @@ import SecondaryButton from "../generic/SecondaryButton";
 import "../styles/BackgroundMenu.css";
 
 export default function BackgroundMenu({ onDeleteBackground }) {
-  const thumbnails = Array(4).fill(<Thumbnail />);
+  const thumbnails = Array(4)
+    .fill()
+    .map((_, i) => <Thumbnail key={i} />);
   return (
     <div className="BackgroundMenu">
       <div className="Header">Select Background</div>

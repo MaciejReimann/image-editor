@@ -12,8 +12,9 @@ export default function LogoMenu({ logos, onDragEnd }) {
             onDragEnd={onDragEnd}
             className="Logo"
             src={logo}
-            alt="logo1"
+            alt="logo"
             cls={"Logo"}
+            key={logo}
           />
         ))}
       </div>
