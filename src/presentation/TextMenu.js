@@ -5,7 +5,10 @@ import "../styles/TextMenu.css";
 export default class TextMenu extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      inputtedText: "",
+      fontSelected: ""
+    };
   }
   render() {
     return (
@@ -14,24 +17,42 @@ export default class TextMenu extends Component {
         <div className="radios">
           <div className="radio">
             <label>
-              <input type="radio" value="Arial" checked={false} />
+              <input
+                onChange={e => this.setState({ fontSelected: e.target.value })}
+                type="radio"
+                value="Arial"
+                checked={this.state.fontSelected === "Arial"}
+              />
               Arial
             </label>
           </div>
           <div className="radio">
             <label>
-              <input type="radio" value="Times New Roman" checked={false} />
+              <input
+                onChange={e => this.setState({ fontSelected: e.target.value })}
+                type="radio"
+                value="Times New Roman"
+                checked={this.state.fontSelected === "Times New Roman"}
+              />
               Times New Roman
             </label>
           </div>
           <div className="radio">
             <label>
-              <input type="radio" value="Open Sans" checked={false} />
+              <input
+                onChange={e => this.setState({ fontSelected: e.target.value })}
+                type="radio"
+                value="Open Sans"
+                checked={this.state.fontSelected === "Open Sans"}
+              />
               Open Sans
             </label>
           </div>
         </div>
-        <input type="text" />
+        <input
+          onChange={e => this.setState({ inputtedText: e.target.value })}
+          type="text"
+        />
         <SecondaryButton label="Add Text" />
       </form>
     );
