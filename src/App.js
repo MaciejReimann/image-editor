@@ -10,13 +10,24 @@ class App extends Component {
         "./assets/logo_one.png",
         "./assets/logo_two.png",
         "./assets/logo_three.png"
-      ]
+      ],
+      draggedImageURL: ""
     };
   }
+
+  handleLogoDrag = (e, url) => {
+    this.setState({ draggedImageURL: url });
+    // console.log(e.target);
+  };
+
   render() {
     return (
       <div className="App ">
-        <AppLayout logos={this.state.logos} />
+        <AppLayout
+          draggedImageURL={this.state.draggedImageURL}
+          logos={this.state.logos}
+          onDragEnd={this.handleLogoDrag}
+        />
       </div>
     );
   }

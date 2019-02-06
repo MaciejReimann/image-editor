@@ -7,7 +7,7 @@ import ToolsMenu from "./ToolsMenu";
 import PrimaryButton from "../generic/PrimaryButton";
 import "../styles/Layout.css";
 
-export default function AppLayout({ logos }) {
+export default function AppLayout({ logos, onDragEnd, draggedImageURL }) {
   return (
     <div className="layout">
       <header className="header">Simple Editor</header>
@@ -15,10 +15,14 @@ export default function AppLayout({ logos }) {
         <BackgroundMenu />
       </aside>
       <main className="editor-window">
-        <EditorWindow width={400} height={400} />
+        <EditorWindow
+          draggedImageURL={draggedImageURL}
+          width={400}
+          height={400}
+        />
       </main>
       <aside className="tools-menu">
-        <ToolsMenu logos={logos} />
+        <ToolsMenu logos={logos} onDragEnd={onDragEnd} />
       </aside>
       <div className="download">
         <PrimaryButton label="Download" />
