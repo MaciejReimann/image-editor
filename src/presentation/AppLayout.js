@@ -7,7 +7,7 @@ import ToolsMenu from "./ToolsMenu";
 import PrimaryButton from "../generic/PrimaryButton";
 import "../styles/Layout.css";
 
-export default function AppLayout() {
+export default function AppLayout({ logos }) {
   return (
     <div className="layout">
       <header className="header">Simple Editor</header>
@@ -18,7 +18,7 @@ export default function AppLayout() {
         <EditorWindow width={400} height={400} />
       </main>
       <aside className="tools-menu">
-        <ToolsMenu />
+        <ToolsMenu logos={logos} />
       </aside>
       <div className="download">
         <PrimaryButton label="Download" />

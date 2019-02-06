@@ -4,10 +4,10 @@ import TextMenu from "./TextMenu";
 
 import "../styles/ToolsMenu.css";
 
-export default function ToolsMenu() {
+export default function ToolsMenu({ logos }) {
   return (
     <div className="ToolsMenu">
-      <LogoMenu />
+      <LogoMenu logos={logos} />
       <TextMenu />
     </div>
   );
