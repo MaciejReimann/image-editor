@@ -15,6 +15,7 @@ export default class TextMenu extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    this.props.textInputtedIs(this.state.inputtedText);
   };
 
   handleRadioChange = e => this.setState({ fontSelected: e.target.value });
