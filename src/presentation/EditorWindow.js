@@ -5,12 +5,21 @@ import BackgroundImage from "./BackgroundImage";
 import "../styles/EditorWindow.css";
 
 export default class EditorWindow extends Component {
-  componentWillUpdate() {
-    this.props.updateStage(this.stageRef);
-    // console.log(this.stageRef);
-  }
+  shouldComponentUpdate = nextProps =>
+    Object.values(this.props).some(
+      (value, i) => value !== Object.values(nextProps)[i]
+    );
+
+  componentDidUpdate = () => this.props.updateStage(this.stageRef);
+
   render() {
-    const { width, height, draggedImageURL, backgroundImageURL } = this.props;
+    const {
+      textsAdded,
+      width,
+      height,
+      draggedImageURL,
+      backgroundImageURL
+    } = this.props;
 
     return (
       <div className="editor">
