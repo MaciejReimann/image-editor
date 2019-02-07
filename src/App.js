@@ -13,14 +13,13 @@ class App extends Component {
       ],
       backgroundImageURL: "https://konvajs.github.io/assets/darth-vader.jpg",
       draggedImageURL: "",
-      editorState: null
+      projectState: null,
+      projectName: "MyProject"
     };
   }
 
   updateStage = stage => {
-    // this.setState({ editorState: stage });
-    this.handleDownLoadClick(stage);
-    // console.log(stage);
+    this.setState({ projectState: stage });
   };
 
   handleLogoDrag = (e, url) => {
@@ -28,7 +27,8 @@ class App extends Component {
     // console.log(e.target);
   };
 
-  handleDownLoadClick = stage => {
+  handleDownLoadClick = btn => {
+    console.log(this.state.projectState);
     function downloadURI(uri, name) {
       var link = document.createElement("a");
       link.download = name;
@@ -37,10 +37,10 @@ class App extends Component {
       link.click();
       document.body.removeChild(link);
     }
-    const dataURL = stage.toDataURL({ pixelRatio: 1 });
-    downloadURI(dataURL, "stage.png");
-
-    // console.log(stage);
+    if (this.state.projectState) {
+      let dataURL = this.state.projectState.toDataURL({ pixelRatio: 1 });
+      downloadURI(dataURL, `${this.state.projectName}.png`);
+    }
   };
 
   render() {
@@ -53,6 +53,7 @@ class App extends Component {
           logos={this.state.logos}
           onDragEnd={this.handleLogoDrag}
           onDownloadClick={this.handleDownLoadClick}
+          downloadDisabled={Boolean(!this.state.projectState)}
         />
       </div>
     );

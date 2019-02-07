@@ -13,7 +13,8 @@ export default function AppLayout({
   onDragEnd,
   draggedImageURL,
   backgroundImageURL,
-  onDownloadClick
+  onDownloadClick,
+  downloadDisabled
 }) {
   return (
     <div className="layout">
@@ -34,7 +35,11 @@ export default function AppLayout({
         <ToolsMenu logos={logos} onDragEnd={onDragEnd} />
       </aside>
       <div className="download">
-        <PrimaryButton onClick={onDownloadClick} label="Download" />
+        <PrimaryButton
+          onClick={onDownloadClick}
+          label="Download"
+          disabled={downloadDisabled}
+        />
       </div>
       <div className="save-load">
         <PrimaryButton label="Save" />

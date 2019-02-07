@@ -15,13 +15,12 @@ export default class EditorWindow extends Component {
     return (
       <div className="editor">
         <Stage
+          width={width}
+          height={height}
           ref={node => {
             this.stageRef = node;
           }}
-          // onMouseOver={e => console.log(this.stageRef.getStage().toDataURL())}
           className="Editor"
-          width={width}
-          height={height}
         >
           <Layer>
             <BackgroundImage url={backgroundImageURL} />
