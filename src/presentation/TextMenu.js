@@ -16,6 +16,7 @@ export default class TextMenu extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.textInputtedIs(this.state.inputtedText);
+    this.setState({ inputtedText: "" });
   };
 
   handleRadioChange = e => this.setState({ fontSelected: e.target.value });
@@ -23,11 +24,15 @@ export default class TextMenu extends Component {
   handleInputChange = e => this.setState({ inputtedText: e.target.value });
 
   render() {
-    const { fontSelected, availableFonts } = this.state;
+    const { inputtedText, fontSelected, availableFonts } = this.state;
     return (
       <form className="TextMenu" onSubmit={this.handleSubmit}>
         <div>Add Text</div>
-        <input onChange={this.handleInputChange} type="text" />
+        <input
+          onChange={this.handleInputChange}
+          type="text"
+          value={inputtedText}
+        />
         <div className="radios">
           {availableFonts.map(font => (
             <RadioInput
