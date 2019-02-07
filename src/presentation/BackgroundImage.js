@@ -10,6 +10,7 @@ export default class BackgroundImage extends Component {
   }
   componentDidMount() {
     let img = new window.Image();
+    img.setAttribute("crossOrigin", "anonymous"); // see why this is necessary: https://goo.gl/FJD5vg
     img.src = this.props.url;
     img.onload = () => {
       this.setState({ image: img });
