@@ -5,14 +5,21 @@ import BackgroundImage from "./BackgroundImage";
 import "../styles/EditorWindow.css";
 
 export default class EditorWindow extends Component {
+  componentWillUpdate() {
+    this.props.updateStage(this.stageRef);
+    // console.log(this.stageRef);
+  }
   render() {
     const { width, height, draggedImageURL, backgroundImageURL } = this.props;
-    console.log(draggedImageURL);
+
     return (
       <div className="editor">
         <Stage
+          ref={node => {
+            this.stageRef = node;
+          }}
+          // onMouseOver={e => console.log(this.stageRef.getStage().toDataURL())}
           className="Editor"
-          onDragEnter={e => console.log(draggedImageURL)}
           width={width}
           height={height}
         >

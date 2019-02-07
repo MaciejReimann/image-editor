@@ -8,10 +8,12 @@ import PrimaryButton from "../generic/PrimaryButton";
 import "../styles/Layout.css";
 
 export default function AppLayout({
+  updateStage,
   logos,
   onDragEnd,
   draggedImageURL,
-  backgroundImageURL
+  backgroundImageURL,
+  onDownloadClick
 }) {
   return (
     <div className="layout">
@@ -21,6 +23,7 @@ export default function AppLayout({
       </aside>
       <main className="editor-window">
         <EditorWindow
+          updateStage={updateStage}
           backgroundImageURL={backgroundImageURL}
           draggedImageURL={draggedImageURL}
           width={400}
@@ -31,7 +34,7 @@ export default function AppLayout({
         <ToolsMenu logos={logos} onDragEnd={onDragEnd} />
       </aside>
       <div className="download">
-        <PrimaryButton label="Download" />
+        <PrimaryButton onClick={onDownloadClick} label="Download" />
       </div>
       <div className="save-load">
         <PrimaryButton label="Save" />
