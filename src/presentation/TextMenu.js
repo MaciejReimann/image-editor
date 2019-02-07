@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SecondaryButton from "../generic/SecondaryButton";
+import RadioInput from "../generic/RadioInput";
 import "../styles/TextMenu.css";
 
 export default class TextMenu extends Component {
@@ -7,53 +8,36 @@ export default class TextMenu extends Component {
     super(props);
     this.state = {
       inputtedText: "",
-      fontSelected: ""
+      fontSelected: "Arial",
+      availableFonts: ["Arial", "Times New Roman", "Open Sans"]
     };
   }
+
+  handleSubmit = e => {
+    e.preventDefault();
+  };
+
+  handleRadioChange = e => this.setState({ fontSelected: e.target.value });
+
+  handleInputChange = e => this.setState({ inputtedText: e.target.value });
+
   render() {
+    const { fontSelected, availableFonts } = this.state;
     return (
-      <form className="TextMenu">
+      <form className="TextMenu" onSubmit={this.handleSubmit}>
         <div>Add Text</div>
+        <input onChange={this.handleInputChange} type="text" />
         <div className="radios">
-          <div className="radio">
-            <label>
-              <input
-                onChange={e => this.setState({ fontSelected: e.target.value })}
-                type="radio"
-                value="Arial"
-                checked={this.state.fontSelected === "Arial"}
-              />
-              Arial
-            </label>
-          </div>
-          <div className="radio">
-            <label>
-              <input
-                onChange={e => this.setState({ fontSelected: e.target.value })}
-                type="radio"
-                value="Times New Roman"
-                checked={this.state.fontSelected === "Times New Roman"}
-              />
-              Times New Roman
-            </label>
-          </div>
-          <div className="radio">
-            <label>
-              <input
-                onChange={e => this.setState({ fontSelected: e.target.value })}
-                type="radio"
-                value="Open Sans"
-                checked={this.state.fontSelected === "Open Sans"}
-              />
-              Open Sans
-            </label>
-          </div>
+          {availableFonts.map(font => (
+            <RadioInput
+              value={font}
+              onChange={this.handleRadioChange}
+              checked={fontSelected === font}
+              key={font}
+            />
+          ))}
         </div>
-        <input
-          onChange={e => this.setState({ inputtedText: e.target.value })}
-          type="text"
-        />
-        <SecondaryButton label="Add Text" />
+        <SecondaryButton onClick={this.handleSubmit} label="Add Text" />
       </form>
     );
   }
