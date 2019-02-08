@@ -21,6 +21,8 @@ export default class EditorWindow extends Component {
       backgroundImageURL
     } = this.props;
 
+    console.log(textsAdded);
+
     return (
       <div className="editor">
         <Stage
@@ -34,9 +36,19 @@ export default class EditorWindow extends Component {
           <Layer>
             <BackgroundImage url={backgroundImageURL} />
           </Layer>
-          <Layer>
-            <Text text="Some text on canvas" fontSize={15} />
-          </Layer>
+          {textsAdded.map(text => (
+            <Layer key={text}>
+              <Text
+                fill="red"
+                text={text}
+                width={width}
+                height={height}
+                fontSize={60}
+                align="center"
+                verticalAlign="middle"
+              />
+            </Layer>
+          ))}
         </Stage>
       </div>
     );
