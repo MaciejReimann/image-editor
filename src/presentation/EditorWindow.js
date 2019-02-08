@@ -20,9 +20,6 @@ export default class EditorWindow extends Component {
       draggedImageURL,
       backgroundImageURL
     } = this.props;
-
-    console.log(textsAdded);
-
     return (
       <div className="editor">
         <Stage
@@ -36,14 +33,15 @@ export default class EditorWindow extends Component {
           <Layer>
             <BackgroundImage url={backgroundImageURL} />
           </Layer>
-          {textsAdded.map(text => (
-            <Layer key={text}>
+          {textsAdded.map((text, i) => (
+            <Layer key={text.value + i}>
               <Text
                 fill="red"
-                text={text}
+                text={text.value}
+                fontFamily={text.font}
                 width={width}
                 height={height}
-                fontSize={60}
+                fontSize={20}
                 align="center"
                 verticalAlign="middle"
               />

@@ -8,7 +8,7 @@ export default function ToolsMenu({ logos, onLogoDrag, onDragEnd, onAddText }) {
   return (
     <div className="ToolsMenu">
       <LogoMenu logos={logos} onDragEnd={onDragEnd} />
-      <TextMenu textInputtedIs={onAddText} />
+      <TextMenu textInputtedHas={onAddText} />
     </div>
   );
 }
