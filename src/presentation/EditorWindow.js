@@ -44,6 +44,7 @@ export default class EditorWindow extends Component {
                 fontSize={20}
                 align="center"
                 verticalAlign="middle"
+                draggable
               />
             </Layer>
           ))}
