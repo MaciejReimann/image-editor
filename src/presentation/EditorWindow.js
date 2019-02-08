@@ -5,12 +5,24 @@ import BackgroundImage from "./BackgroundImage";
 import "../styles/EditorWindow.css";
 
 export default class EditorWindow extends Component {
-  shouldComponentUpdate = nextProps =>
+  constructor(props) {
+    super(props);
+    this.state = {
+      isDragged: false
+    };
+  }
+
+  shouldComponentUpdate = (nextProps, nextState) =>
     Object.values(this.props).some(
       (value, i) => value !== Object.values(nextProps)[i]
+    ) ||
+    Object.values(this.state).some(
+      (value, i) => value !== Object.values(nextState)[i]
     );
 
   componentDidUpdate = () => this.props.updateStage(this.stageRef);
+
+  toggleIsDragged = () => this.setState({ isDragged: !this.state.isDragged });
 
   render() {
     const {
@@ -20,6 +32,7 @@ export default class EditorWindow extends Component {
       draggedImageURL,
       backgroundImageURL
     } = this.props;
+
     return (
       <div className="editor">
         <Stage
@@ -45,6 +58,11 @@ export default class EditorWindow extends Component {
                 align="center"
                 verticalAlign="middle"
                 draggable
+                onDragStart={this.toggleIsDragged}
+                onDragEnd={this.toggleIsDragged}
+                shadowOffset={{ x: 1, y: 1 }}
+                shadowOpacity={0.5}
+                shadowEnabled={this.state.isDragged}
               />
             </Layer>
           ))}
