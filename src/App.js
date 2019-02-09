@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import AppLayout from "./presentation/AppLayout";
 import downloadURI from "./helpers/downloadURI";
+import preloadImage from "./helpers/preloadImage";
 import "./styles/App.css";
 
 class App extends Component {
@@ -21,12 +22,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    let img = new window.Image();
-    img.setAttribute("crossOrigin", "anonymous"); // see why this is necessary: https://goo.gl/FJD5vg
-    img.src = "/assets/empty_background.bmp";
-    img.onload = () => {
-      this.setState({ currentProject: { background: img } });
-    };
+    preloadImage("/assets/empty_background.bmp", img =>
+      this.setState({ currentProject: { background: img } })
+    );
   }
 
   updateProject = data => {
@@ -39,15 +37,6 @@ class App extends Component {
   };
 
   handleDownLoadClick = () => {
-    // console.log(this.state.projectState);
-    // function downloadURI(uri, name) {
-    //   var link = document.createElement("a");
-    //   link.download = name;
-    //   link.href = uri;
-    //   document.body.appendChild(link);
-    //   link.click();
-    //   document.body.removeChild(link);
-    // }
     // if (this.state.projectState) {
     let dataURL = this.state.currentProject.view.toDataURL({ pixelRatio: 1 });
     downloadURI(dataURL, `${this.state.currentProject.name}.png`);
