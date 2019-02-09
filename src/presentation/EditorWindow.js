@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import Konva from "konva";
-import { Stage, Layer, Rect, Text, Circle, Line } from "react-konva";
+import { Stage, Layer } from "react-konva";
+import "../styles/EditorWindow.css";
+
 import TextField from "../logic/TextField";
 import BackgroundImage from "./BackgroundImage";
-
-import "../styles/EditorWindow.css";
 
 export default class EditorWindow extends Component {
   constructor(props) {
@@ -39,10 +38,10 @@ export default class EditorWindow extends Component {
       textsAdded,
       width,
       height,
-      draggedImageURL,
+      // draggedImageURL,
       backgroundImageURL
     } = this.props;
-    // console.log(this.textRef);
+
     return (
       <div className="editor">
         <Stage

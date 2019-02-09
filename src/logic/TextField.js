@@ -6,9 +6,15 @@ export default class TextField extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      width: 0
+      isShowingContextMenu: false
     };
   }
+
+  toggleShowingContextMenu = e => {
+    e.evt.preventDefault();
+    this.setState({ isShowingContextMenu: !this.state.isShowingContextMenu });
+    console.log("rightclick", e);
+  };
   render() {
     const {
       text,
@@ -35,6 +41,7 @@ export default class TextField extends Component {
         shadowOffset={{ x: 1, y: 1 }}
         shadowOpacity={0.5}
         shadowEnabled={shadowEnabled}
+        onContextMenu={e => this.toggleShowingContextMenu(e)}
       />
     );
   }
