@@ -32,7 +32,7 @@ export default function AppLayout({
         <EditorWindow
           background={currentProject.background}
           texts={currentProject.texts}
-          updateStage={onStageUpdate}
+          onStageUpdate={onStageUpdate}
           // draggedImageURL={draggedImageURL}
           stageWidth={400}
           stageHeight={400}

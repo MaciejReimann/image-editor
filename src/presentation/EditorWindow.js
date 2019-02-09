@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Stage } from "react-konva";
 import "../styles/EditorWindow.css";
-
+import hasObjectChanged from "../helpers/hasObjectChanged";
 import TextField from "../logic/TextField";
 import BackgroundImage from "./BackgroundImage";
 import ContextMenu from ".//ContextMenu";
@@ -11,19 +11,16 @@ export default class EditorWindow extends Component {
     super(props);
     this.state = {
       textDragged: "",
+      imageDragged: null,
       contextMenuPosition: null
     };
   }
 
   shouldComponentUpdate = (nextProps, nextState) =>
-    Object.values(this.props).some(
-      (value, i) => value !== Object.values(nextProps)[i]
-    ) ||
-    Object.values(this.state).some(
-      (value, i) => value !== Object.values(nextState)[i]
-    );
+    hasObjectChanged(this.props, nextProps) ||
+    hasObjectChanged(this.state, nextState);
 
-  componentDidUpdate = () => this.props.updateStage();
+  componentDidUpdate = () => this.props.onStageUpdate();
 
   handleTextDragStart = e => {
     this.setState({ textDragged: e.target.attrs.text });
