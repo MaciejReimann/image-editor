@@ -24,7 +24,10 @@ export default class TextMenu extends Component {
 
   handleRadioChange = e => this.setState({ fontSelected: e.target.value });
 
-  handleInputChange = e => this.setState({ inputtedText: e.target.value });
+  handleInputChange = e => {
+    console.log(e.target);
+    this.setState({ inputtedText: e.target.value });
+  };
 
   render() {
     const { inputtedText, fontSelected, availableFonts } = this.state;

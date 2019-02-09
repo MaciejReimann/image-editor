@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import Konva from "konva";
 import { Stage, Layer, Rect, Text, Circle, Line } from "react-konva";
+import TextField from "../logic/TextField";
 import BackgroundImage from "./BackgroundImage";
+
 import "../styles/EditorWindow.css";
 
 export default class EditorWindow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isDragged: false
+      textDragged: ""
     };
   }
 
@@ -22,7 +24,15 @@ export default class EditorWindow extends Component {
 
   componentDidUpdate = () => this.props.updateStage(this.stageRef);
 
-  toggleIsDragged = () => this.setState({ isDragged: !this.state.isDragged });
+  handleHoverText = e => console.log(e.target.textWidth);
+
+  handleTextDragStart = e => {
+    this.setState({ textDragged: e.target.attrs.text });
+  };
+
+  handleTextDragEnd = () => {
+    this.setState({ textDragged: "" });
+  };
 
   render() {
     const {
@@ -32,7 +42,7 @@ export default class EditorWindow extends Component {
       draggedImageURL,
       backgroundImageURL
     } = this.props;
-
+    // console.log(this.textRef);
     return (
       <div className="editor">
         <Stage
@@ -46,26 +56,24 @@ export default class EditorWindow extends Component {
           <Layer>
             <BackgroundImage url={backgroundImageURL} />
           </Layer>
-          {textsAdded.map((text, i) => (
-            <Layer key={text.value + i}>
-              <Text
-                fill="red"
-                text={text.value}
-                fontFamily={text.font}
+          <Layer>
+            {textsAdded.map((text, i) => (
+              <TextField
                 width={width}
                 height={height}
-                fontSize={20}
-                align="center"
-                verticalAlign="middle"
+                text={text.value}
+                fontFamily={text.font}
                 draggable
-                onDragStart={this.toggleIsDragged}
-                onDragEnd={this.toggleIsDragged}
+                onDragStart={e => this.handleTextDragStart(e)}
+                onDragEnd={this.handleTextDragEnd}
+                onMouseOver={e => this.handleHoverText(e)}
                 shadowOffset={{ x: 1, y: 1 }}
                 shadowOpacity={0.5}
-                shadowEnabled={this.state.isDragged}
+                shadowEnabled={this.state.textDragged === text.value}
+                key={text.value + i}
               />
-            </Layer>
-          ))}
+            ))}
+          </Layer>
         </Stage>
       </div>
     );
