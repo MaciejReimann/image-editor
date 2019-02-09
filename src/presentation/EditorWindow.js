@@ -1,22 +1,67 @@
 import React, { Component } from "react";
-import Konva from "konva";
-import { Stage, Layer, Rect, Text, Circle, Line } from "react-konva";
-import BackgroundImage from "./BackgroundImage";
+import { Stage, Layer } from "react-konva";
 import "../styles/EditorWindow.css";
 
+import TextField from "../logic/TextField";
+import BackgroundImage from "./BackgroundImage";
+import ContextMenu from ".//ContextMenu";
+
 export default class EditorWindow extends Component {
-  componentWillUpdate() {
-    this.props.updateStage(this.stageRef);
-    // console.log(this.stageRef);
+  constructor(props) {
+    super(props);
+    this.state = {
+      textDragged: "",
+      contextMenuPosition: null
+    };
   }
+
+  shouldComponentUpdate = (nextProps, nextState) =>
+    Object.values(this.props).some(
+      (value, i) => value !== Object.values(nextProps)[i]
+    ) ||
+    Object.values(this.state).some(
+      (value, i) => value !== Object.values(nextState)[i]
+    );
+
+  componentDidUpdate = () => this.props.updateStage(this.stageRef);
+
+  handleTextDragStart = e => {
+    this.setState({ textDragged: e.target.attrs.text });
+  };
+
+  handleTextDragEnd = () => {
+    this.setState({ textDragged: "" });
+  };
+
+  toggleShowingContextMenu = e => {
+    console.log(e.evt);
+
+    this.setState({
+      contextMenuPosition: this.state.contextMenuPosition
+        ? null
+        : { x: e.evt.pageX - this.props.stageWidth / 2, y: e.evt.pageY + 12 }
+    });
+  };
+
+  handleContextMenuOptionClick = option => {
+    console.log(option);
+  };
+
   render() {
-    const { width, height, draggedImageURL, backgroundImageURL } = this.props;
+    const {
+      textsAdded,
+      stageWidth,
+      stageHeight,
+      // draggedImageURL,
+      backgroundImageURL,
+      handleContextMenuOptionClick
+    } = this.props;
 
     return (
       <div className="editor">
         <Stage
-          width={width}
-          height={height}
+          width={stageWidth}
+          height={stageHeight}
           ref={node => {
             this.stageRef = node;
           }}
@@ -25,10 +70,31 @@ export default class EditorWindow extends Component {
           <Layer>
             <BackgroundImage url={backgroundImageURL} />
           </Layer>
-          <Layer>
-            <Text text="Some text on canvas" fontSize={15} />
-          </Layer>
+          {textsAdded.map((text, i) => (
+            <TextField
+              stageWidth={stageWidth}
+              stageHeight={stageHeight}
+              text={text.value}
+              fontFamily={text.font}
+              draggable
+              onShowContextMenu={e => this.toggleShowingContextMenu(e)}
+              onDragStart={e => this.handleTextDragStart(e)}
+              onDragEnd={this.handleTextDragEnd}
+              shadowEnabled={this.state.textDragged === text.value}
+              key={text.value + i}
+            />
+          ))}
         </Stage>
+        {this.state.contextMenuPosition && (
+          <ContextMenu
+            options={[{ name: "Delete" }]}
+            position={{
+              x: this.state.contextMenuPosition.x,
+              y: this.state.contextMenuPosition.y
+            }}
+            onOptionClick={handleContextMenuOptionClick}
+          />
+        )}
       </div>
     );
   }

@@ -14,7 +14,10 @@ export default function AppLayout({
   draggedImageURL,
   backgroundImageURL,
   onDownloadClick,
-  downloadDisabled
+  downloadDisabled,
+  onAddText,
+  textsAdded,
+  handleContextMenuOptionClick
 }) {
   return (
     <div className="layout">
@@ -24,15 +27,17 @@ export default function AppLayout({
       </aside>
       <main className="editor-window">
         <EditorWindow
+          textsAdded={textsAdded}
           updateStage={updateStage}
           backgroundImageURL={backgroundImageURL}
           draggedImageURL={draggedImageURL}
-          width={400}
-          height={400}
+          stageWidth={400}
+          stageHeight={400}
+          handleContextMenuOptionClick={handleContextMenuOptionClick}
         />
       </main>
       <aside className="tools-menu">
-        <ToolsMenu logos={logos} onDragEnd={onDragEnd} />
+        <ToolsMenu logos={logos} onDragEnd={onDragEnd} onAddText={onAddText} />
       </aside>
       <div className="download">
         <PrimaryButton
