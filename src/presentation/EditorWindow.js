@@ -25,8 +25,6 @@ export default class EditorWindow extends Component {
 
   componentDidUpdate = () => this.props.updateStage(this.stageRef);
 
-  handleHoverText = e => console.log(e.target.textWidth);
-
   handleTextDragStart = e => {
     this.setState({ textDragged: e.target.attrs.text });
   };
@@ -41,7 +39,7 @@ export default class EditorWindow extends Component {
     this.setState({
       contextMenuPosition: this.state.contextMenuPosition
         ? null
-        : { x: e.evt.pageX - this.props.width / 2, y: e.evt.pageY + 12 }
+        : { x: e.evt.pageX - this.props.stageWidth / 2, y: e.evt.pageY + 12 }
     });
   };
 
@@ -52,8 +50,8 @@ export default class EditorWindow extends Component {
   render() {
     const {
       textsAdded,
-      width,
-      height,
+      stageWidth,
+      stageHeight,
       // draggedImageURL,
       backgroundImageURL,
       handleContextMenuOptionClick
@@ -62,8 +60,8 @@ export default class EditorWindow extends Component {
     return (
       <div className="editor">
         <Stage
-          width={width}
-          height={height}
+          width={stageWidth}
+          height={stageHeight}
           ref={node => {
             this.stageRef = node;
           }}
@@ -74,17 +72,14 @@ export default class EditorWindow extends Component {
           </Layer>
           {textsAdded.map((text, i) => (
             <TextField
-              width={width}
-              height={height}
+              stageWidth={stageWidth}
+              stageHeight={stageHeight}
               text={text.value}
               fontFamily={text.font}
               draggable
               onShowContextMenu={e => this.toggleShowingContextMenu(e)}
               onDragStart={e => this.handleTextDragStart(e)}
               onDragEnd={this.handleTextDragEnd}
-              onMouseOver={e => this.handleHoverText(e)}
-              shadowOffset={{ x: 1, y: 1 }}
-              shadowOpacity={0.5}
               shadowEnabled={this.state.textDragged === text.value}
               key={text.value + i}
             />

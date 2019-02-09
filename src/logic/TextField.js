@@ -9,6 +9,11 @@ export default class TextField extends Component {
       textHeight: 0
     };
   }
+  static defaultProps = {
+    color: "red",
+    shadowOffset: { x: 1, y: 1 },
+    shadowOpacity: 0.5
+  };
 
   componentDidMount() {
     this.setState({
@@ -22,34 +27,27 @@ export default class TextField extends Component {
     this.props.onShowContextMenu(e);
   };
 
+  onMouseEnter = () => (document.body.style.cursor = "pointer");
+  onMouseLeave = () => (document.body.style.cursor = "default");
+
   render() {
-    const {
-      text,
-      font,
-      width,
-      height,
-      onDragStart,
-      onDragEnd,
-      onMouseOver,
-      shadowEnabled
-    } = this.props;
-    const { textWidth, textHeight } = this.state;
     return (
       <Layer>
         <Text
-          fill="red"
-          text={text}
-          fontFamily={font}
-          x={width / 2 - textWidth / 2}
-          y={height / 2 - textHeight / 2}
+          x={this.props.stageWidth / 2 - this.state.textWidth / 2}
+          y={this.props.stageHeight / 2 - this.state.textHeight / 2}
+          text={this.props.text}
+          fontFamily={this.props.font}
+          fill={this.props.color}
           fontSize={20}
           draggable
-          onDragStart={e => onDragStart(e)}
-          onDragEnd={onDragEnd}
-          onMouseOver={e => onMouseOver(e)}
-          shadowOffset={{ x: 1, y: 1 }}
-          shadowOpacity={0.5}
-          shadowEnabled={shadowEnabled}
+          onDragStart={e => this.props.onDragStart(e)}
+          onDragEnd={this.props.onDragEnd}
+          onMouseEnter={this.onMouseEnter}
+          onMouseLeave={this.onMouseLeave}
+          shadowOffset={this.props.shadowOffset}
+          shadowOpacity={this.props.shadowOpacity}
+          shadowEnabled={this.props.shadowEnabled}
           onContextMenu={e => this.onShowContextMenu(e)}
           ref={node => {
             this.textRef = node;

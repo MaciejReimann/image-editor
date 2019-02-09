@@ -31,8 +31,8 @@ export default function AppLayout({
           updateStage={updateStage}
           backgroundImageURL={backgroundImageURL}
           draggedImageURL={draggedImageURL}
-          width={400}
-          height={400}
+          stageWidth={400}
+          stageHeight={400}
           handleContextMenuOptionClick={handleContextMenuOptionClick}
         />
       </main>
