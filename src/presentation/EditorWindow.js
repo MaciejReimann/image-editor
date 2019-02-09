@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Stage, Layer } from "react-konva";
+import { Stage } from "react-konva";
 import "../styles/EditorWindow.css";
 
 import TextField from "../logic/TextField";
@@ -23,7 +23,7 @@ export default class EditorWindow extends Component {
       (value, i) => value !== Object.values(nextState)[i]
     );
 
-  componentDidUpdate = () => this.props.updateStage(this.stageRef);
+  componentDidUpdate = () => this.props.updateStage();
 
   handleTextDragStart = e => {
     this.setState({ textDragged: e.target.attrs.text });
@@ -34,8 +34,6 @@ export default class EditorWindow extends Component {
   };
 
   toggleShowingContextMenu = e => {
-    console.log(e.evt);
-
     this.setState({
       contextMenuPosition: this.state.contextMenuPosition
         ? null
@@ -53,24 +51,14 @@ export default class EditorWindow extends Component {
       stageWidth,
       stageHeight,
       // draggedImageURL,
-      backgroundImageURL,
       handleContextMenuOptionClick
     } = this.props;
 
     return (
-      <div className="editor">
-        <Stage
-          width={stageWidth}
-          height={stageHeight}
-          ref={node => {
-            this.stageRef = node;
-          }}
-          className="Editor"
-        >
-          <Layer>
-            <BackgroundImage url={backgroundImageURL} />
-          </Layer>
-          {textsAdded.map((text, i) => (
+      <div className="Editor">
+        <Stage width={stageWidth} height={stageHeight} className="Editor">
+          <BackgroundImage image={this.props.background} />
+          {/* {this.props.texts.map((text, i) => (
             <TextField
               stageWidth={stageWidth}
               stageHeight={stageHeight}
@@ -83,7 +71,7 @@ export default class EditorWindow extends Component {
               shadowEnabled={this.state.textDragged === text.value}
               key={text.value + i}
             />
-          ))}
+          ))} */}
         </Stage>
         {this.state.contextMenuPosition && (
           <ContextMenu

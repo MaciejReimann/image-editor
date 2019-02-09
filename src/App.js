@@ -6,25 +6,36 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      logos: [
+      logosURLs: [
         "./assets/logo_one.png",
         "./assets/logo_two.png",
         "./assets/logo_three.png"
       ],
-      backgroundImageURL: "https://konvajs.github.io/assets/darth-vader.jpg",
-      draggedImageURL: "",
-      projectState: null,
-      projectName: "MyProject",
-      textsAdded: []
+      currentProject: {
+        name: "MyProject",
+        background: null,
+        texts: [],
+        images: []
+      },
+      draggedImageURL: ""
     };
   }
 
-  updateStage = stage => {
-    this.setState({ projectState: stage });
+  componentDidMount() {
+    let img = new window.Image();
+    img.setAttribute("crossOrigin", "anonymous"); // see why this is necessary: https://goo.gl/FJD5vg
+    img.src = "/assets/empty_background.bmp";
+    img.onload = () => {
+      this.setState({ currentProject: { background: img } });
+    };
+  }
+
+  updateProject = data => {
+    // this.setState({ currentProject: data });
   };
 
   handleLogoDrag = (e, url) => {
-    this.setState({ draggedImageURL: url });
+    // this.setState({ draggedImageURL: url });
     // console.log(e.target);
   };
 
@@ -55,16 +66,18 @@ class App extends Component {
     return (
       <div className="App">
         <AppLayout
-          updateStage={this.updateStage}
-          backgroundImageURL={this.state.backgroundImageURL}
-          draggedImageURL={this.state.draggedImageURL}
-          logos={this.state.logos}
-          onDragEnd={this.handleLogoDrag}
-          onDownloadClick={this.handleDownLoadClick}
-          downloadDisabled={Boolean(!this.state.projectState)}
-          onAddText={this.handleAddText}
-          textsAdded={this.state.textsAdded}
-          handleContextMenuOptionClick={this.handleContextMenuOptionClick}
+          logosURLs={this.state.logosURLs}
+          currentProject={this.state.currentProject}
+          onStageUpdate={this.updateProject}
+          // editorBackground={this.state.currentProject.background}
+
+          // draggedImageURL={this.state.draggedImageURL}
+          // onDragEnd={this.handleLogoDrag}
+          // onDownloadClick={this.handleDownLoadClick}
+          // downloadDisabled={Boolean(!this.state.projectState)}
+          // onAddText={this.handleAddText}
+          // textsAdded={this.state.textsAdded}
+          // handleContextMenuOptionClick={this.handleContextMenuOptionClick}
         />
       </div>
     );

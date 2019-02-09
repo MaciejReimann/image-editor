@@ -2,22 +2,25 @@ import React from "react";
 
 import BackgroundMenu from "./BackgroundMenu";
 import EditorWindow from "./EditorWindow";
-import ToolsMenu from "./ToolsMenu";
+import LogoMenu from "./LogoMenu";
+import TextMenu from "./TextMenu";
 
 import PrimaryButton from "../generic/PrimaryButton";
 import "../styles/Layout.css";
 
 export default function AppLayout({
-  updateStage,
-  logos,
-  onDragEnd,
-  draggedImageURL,
-  backgroundImageURL,
+  // logosURLs,
+  currentProject,
+  onStageUpdate,
+
+  // onDragEnd,
+  // draggedImageURL,
   onDownloadClick,
-  downloadDisabled,
-  onAddText,
-  textsAdded,
-  handleContextMenuOptionClick
+  downloadDisabled
+  // onAddText,
+  // textsAdded,
+
+  // handleContextMenuOptionClick
 }) {
   return (
     <div className="layout">
@@ -27,17 +30,20 @@ export default function AppLayout({
       </aside>
       <main className="editor-window">
         <EditorWindow
-          textsAdded={textsAdded}
-          updateStage={updateStage}
-          backgroundImageURL={backgroundImageURL}
-          draggedImageURL={draggedImageURL}
+          background={currentProject.background}
+          texts={currentProject.texts}
+          updateStage={onStageUpdate}
+          // draggedImageURL={draggedImageURL}
           stageWidth={400}
           stageHeight={400}
-          handleContextMenuOptionClick={handleContextMenuOptionClick}
+          // handleContextMenuOptionClick={handleContextMenuOptionClick}
         />
       </main>
-      <aside className="tools-menu">
-        <ToolsMenu logos={logos} onDragEnd={onDragEnd} onAddText={onAddText} />
+      <aside className="tools-menu ToolsMenu">
+        <div className="ToolsMenu">
+          {/* <LogoMenu logos={logosURLs} onDragEnd={onDragEnd} /> */}
+          {/* <TextMenu textInputtedHas={onAddText} /> */}
+        </div>
       </aside>
       <div className="download">
         <PrimaryButton
