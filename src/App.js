@@ -13,22 +13,20 @@ class App extends Component {
         "./assets/logo_two.png",
         "./assets/logo_three.png"
       ],
-      currentProject: {
-        data: { name: "MyProject", background: null, texts: [], images: [] },
-        view: null
+      projectData: {
+        name: "MyProject",
+        background: "/assets/empty_background.bmp",
+        texts: [],
+        images: []
       },
+      projectView: null,
       draggedImageURL: ""
     };
   }
 
-  componentDidMount() {
-    preloadImage("/assets/empty_background.bmp", img =>
-      this.setState({ currentProject: { background: img } })
-    );
-  }
-
-  updateProject = data => {
-    // this.setState({ currentProject: data });
+  updateProjectView = data => {
+    console.log(data);
+    // this.setState({ projectData: data });
   };
 
   handleLogoDrag = (e, url) => {
@@ -37,10 +35,10 @@ class App extends Component {
   };
 
   handleDownLoadClick = () => {
-    // if (this.state.projectState) {
-    let dataURL = this.state.currentProject.view.toDataURL({ pixelRatio: 1 });
-    downloadURI(dataURL, `${this.state.currentProject.name}.png`);
-    // }
+    if (this.state.projectView) {
+      let dataURL = this.state.projectView.toDataURL({ pixelRatio: 1 });
+      downloadURI(dataURL, `${this.state.projectData.name}.png`);
+    }
   };
 
   handleAddText = text =>
@@ -55,14 +53,12 @@ class App extends Component {
       <div className="App">
         <AppLayout
           logosURLs={this.state.logosURLs}
-          currentProject={this.state.currentProject}
-          onStageUpdate={this.updateProject}
-          // editorBackground={this.state.currentProject.background}
-
+          projectData={this.state.projectData}
+          onStageUpdate={this.updateProjectView}
           // draggedImageURL={this.state.draggedImageURL}
           // onDragEnd={this.handleLogoDrag}
-          // onDownloadClick={this.handleDownLoadClick}
-          // downloadDisabled={Boolean(!this.state.projectState)}
+          onDownloadClick={this.handleDownLoadClick}
+          downloadDisabled={Boolean(!this.state.projectState)}
           // onAddText={this.handleAddText}
           // textsAdded={this.state.textsAdded}
           // handleContextMenuOptionClick={this.handleContextMenuOptionClick}

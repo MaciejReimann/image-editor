@@ -9,15 +9,15 @@ import PrimaryButton from "../generic/PrimaryButton";
 import "../styles/Layout.css";
 
 export default function AppLayout({
-  // logosURLs,
-  currentProject,
+  logosURLs,
+  projectData,
   onStageUpdate,
 
-  // onDragEnd,
+  onDragEnd,
   // draggedImageURL,
   onDownloadClick,
-  downloadDisabled
-  // onAddText,
+  downloadDisabled,
+  onAddText
   // textsAdded,
 
   // handleContextMenuOptionClick
@@ -30,8 +30,8 @@ export default function AppLayout({
       </aside>
       <main className="editor-window">
         <EditorWindow
-          background={currentProject.background}
-          texts={currentProject.texts}
+          background={projectData.background}
+          texts={projectData.texts}
           onStageUpdate={onStageUpdate}
           // draggedImageURL={draggedImageURL}
           stageWidth={400}
@@ -41,8 +41,8 @@ export default function AppLayout({
       </main>
       <aside className="tools-menu ToolsMenu">
         <div className="ToolsMenu">
-          {/* <LogoMenu logos={logosURLs} onDragEnd={onDragEnd} /> */}
-          {/* <TextMenu textInputtedHas={onAddText} /> */}
+          <LogoMenu logos={logosURLs} onDragEnd={onDragEnd} />
+          <TextMenu textInputtedHas={onAddText} />
         </div>
       </aside>
       <div className="download">

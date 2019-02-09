@@ -18,9 +18,9 @@ export default class EditorWindow extends Component {
 
   shouldComponentUpdate = (nextProps, nextState) =>
     hasObjectChanged(this.props, nextProps) ||
-    hasObjectChanged(this.state, nextState);
+    hasObjectChanged(this.state, nextState); // this is unnnecessary once text and image position is written into a model
 
-  componentDidUpdate = () => this.props.onStageUpdate();
+  componentDidUpdate = () => this.props.onStageUpdate(this.stageRef);
 
   handleTextDragStart = e => {
     this.setState({ textDragged: e.target.attrs.text });
@@ -43,6 +43,7 @@ export default class EditorWindow extends Component {
   };
 
   render() {
+    console.log(this.props);
     const {
       textsAdded,
       stageWidth,
@@ -53,9 +54,14 @@ export default class EditorWindow extends Component {
 
     return (
       <div className="Editor">
-        <Stage width={stageWidth} height={stageHeight} className="Editor">
+        <Stage
+          width={stageWidth}
+          height={stageHeight}
+          className="Editor"
+          ref={node => (this.stageRef = node)}
+        >
           <BackgroundImage image={this.props.background} />
-          {/* {this.props.texts.map((text, i) => (
+          {this.props.texts.map((text, i) => (
             <TextField
               stageWidth={stageWidth}
               stageHeight={stageHeight}
@@ -68,9 +74,9 @@ export default class EditorWindow extends Component {
               shadowEnabled={this.state.textDragged === text.value}
               key={text.value + i}
             />
-          ))} */}
+          ))}
         </Stage>
-        {this.state.contextMenuPosition && (
+        {/* {this.state.contextMenuPosition && (
           <ContextMenu
             options={[{ name: "Delete" }]}
             position={{
@@ -79,7 +85,7 @@ export default class EditorWindow extends Component {
             }}
             onOptionClick={handleContextMenuOptionClick}
           />
-        )}
+        )} */}
       </div>
     );
   }

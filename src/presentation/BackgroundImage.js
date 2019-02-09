@@ -1,10 +1,24 @@
-import React from "react";
+import React, { Component } from "react";
 import { Layer, Image } from "react-konva";
+import preloadImage from "../helpers/preloadImage";
 
-export default function BackgroundImage({ image }) {
-  return (
-    <Layer>
-      <Image image={image} />
-    </Layer>
-  );
+export default class BackgroundImage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      image: null
+    };
+  }
+
+  componentDidMount() {
+    preloadImage(this.props.image, img => this.setState({ image: img }));
+  }
+
+  render() {
+    return (
+      <Layer>
+        <Image image={this.state.image} />
+      </Layer>
+    );
+  }
 }
