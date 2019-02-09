@@ -56,7 +56,7 @@ export default class EditorWindow extends Component {
               stageWidth={this.props.stageWidth}
               stageHeight={this.props.stageHeight}
               text={text.value}
-              fontFamily={text.font}
+              font={text.font}
               draggable
               onShowContextMenu={e => this.toggleShowingContextMenu(e)}
               onDragStart={e => this.handleTextDragStart(e)}
