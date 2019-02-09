@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AppLayout from "./presentation/AppLayout";
+import downloadURI from "./helpers/downloadURI";
 import "./styles/App.css";
 
 class App extends Component {
@@ -12,10 +13,8 @@ class App extends Component {
         "./assets/logo_three.png"
       ],
       currentProject: {
-        name: "MyProject",
-        background: null,
-        texts: [],
-        images: []
+        data: { name: "MyProject", background: null, texts: [], images: [] },
+        view: null
       },
       draggedImageURL: ""
     };
@@ -41,18 +40,18 @@ class App extends Component {
 
   handleDownLoadClick = () => {
     // console.log(this.state.projectState);
-    function downloadURI(uri, name) {
-      var link = document.createElement("a");
-      link.download = name;
-      link.href = uri;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-    if (this.state.projectState) {
-      let dataURL = this.state.projectState.toDataURL({ pixelRatio: 1 });
-      downloadURI(dataURL, `${this.state.projectName}.png`);
-    }
+    // function downloadURI(uri, name) {
+    //   var link = document.createElement("a");
+    //   link.download = name;
+    //   link.href = uri;
+    //   document.body.appendChild(link);
+    //   link.click();
+    //   document.body.removeChild(link);
+    // }
+    // if (this.state.projectState) {
+    let dataURL = this.state.currentProject.view.toDataURL({ pixelRatio: 1 });
+    downloadURI(dataURL, `${this.state.currentProject.name}.png`);
+    // }
   };
 
   handleAddText = text =>
