@@ -11,8 +11,8 @@ export default function ContextMenu({ options, position, onOptionClick }) {
         {options.map(option => (
           <li
             className="option"
-            key={option.name}
             onClick={() => onOptionClick(option.name)}
+            key={option.name}
           >
             {option.name}
           </li>

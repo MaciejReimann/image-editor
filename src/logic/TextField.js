@@ -1,10 +1,20 @@
 import React, { Component } from "react";
-import { Stage, Layer, Rect, Text, Circle, Line } from "react-konva";
+import { Layer, Rect, Text } from "react-konva";
 
 export default class TextField extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      textWidth: 0,
+      textHeight: 0
+    };
+  }
+
+  componentDidMount() {
+    this.setState({
+      textWidth: this.textRef.getTextWidth(),
+      textHeight: this.textRef.getTextHeight()
+    });
   }
 
   onShowContextMenu = e => {
@@ -23,14 +33,15 @@ export default class TextField extends Component {
       onMouseOver,
       shadowEnabled
     } = this.props;
+    const { textWidth, textHeight } = this.state;
     return (
       <Layer>
         <Text
           fill="red"
           text={text}
           fontFamily={font}
-          x={width / 2}
-          y={height / 2}
+          x={width / 2 - textWidth / 2}
+          y={height / 2 - textHeight / 2}
           fontSize={20}
           draggable
           onDragStart={e => onDragStart(e)}
@@ -40,6 +51,9 @@ export default class TextField extends Component {
           shadowOpacity={0.5}
           shadowEnabled={shadowEnabled}
           onContextMenu={e => this.onShowContextMenu(e)}
+          ref={node => {
+            this.textRef = node;
+          }}
         />
       </Layer>
     );
