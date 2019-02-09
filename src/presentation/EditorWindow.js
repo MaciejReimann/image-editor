@@ -11,7 +11,7 @@ export default class EditorWindow extends Component {
     super(props);
     this.state = {
       textDragged: "",
-      isShowingContextMenu: false
+      contextMenuPosition: null
     };
   }
 
@@ -36,7 +36,17 @@ export default class EditorWindow extends Component {
   };
 
   toggleShowingContextMenu = e => {
-    this.setState({ isShowingContextMenu: !this.state.isShowingContextMenu });
+    console.log(e.evt);
+
+    this.setState({
+      contextMenuPosition: this.state.contextMenuPosition
+        ? null
+        : { x: e.evt.pageX - this.props.width / 2, y: e.evt.pageY + 12 }
+    });
+  };
+
+  handleContextMenuOptionClick = option => {
+    console.log(option);
   };
 
   render() {
@@ -68,7 +78,7 @@ export default class EditorWindow extends Component {
               text={text.value}
               fontFamily={text.font}
               draggable
-              onShowContextMenu={this.toggleShowingContextMenu}
+              onShowContextMenu={e => this.toggleShowingContextMenu(e)}
               onDragStart={e => this.handleTextDragStart(e)}
               onDragEnd={this.handleTextDragEnd}
               onMouseOver={e => this.handleHoverText(e)}
@@ -79,8 +89,15 @@ export default class EditorWindow extends Component {
             />
           ))}
         </Stage>
-        {this.state.isShowingContextMenu && (
-          <ContextMenu options={[{ name: "Delete" }]} />
+        {this.state.contextMenuPosition && (
+          <ContextMenu
+            options={[{ name: "Delete" }]}
+            position={{
+              x: this.state.contextMenuPosition.x,
+              y: this.state.contextMenuPosition.y
+            }}
+            onOptionClick={this.handleContextMenuOptionClick}
+          />
         )}
       </div>
     );
