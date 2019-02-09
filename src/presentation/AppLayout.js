@@ -9,9 +9,9 @@ import "../styles/Layout.css";
 export default function AppLayout({
   logosURLs,
   projectData,
-  onProjectViewUpdate,
+  onUpdateProjectView,
   download,
-  onDragEnd,
+  onAddLogo,
   onAddText,
   contextMenu
 }) {
@@ -23,10 +23,8 @@ export default function AppLayout({
       </aside>
       <main className="editor-window">
         <EditorWindow
-          background={projectData.background}
-          texts={projectData.texts}
-          logos={projectData.logos}
-          onStageUpdate={onProjectViewUpdate}
+          projectData={projectData}
+          onStageUpdate={onUpdateProjectView}
           stageWidth={400}
           stageHeight={400}
           contextMenu={contextMenu}
@@ -34,14 +32,14 @@ export default function AppLayout({
       </main>
       <aside className="tools-menu ToolsMenu">
         <div className="ToolsMenu">
-          <LogoMenu logos={logosURLs} onDragEnd={onDragEnd} />
+          <LogoMenu logos={logosURLs} onDragEnd={onAddLogo} />
           <TextMenu onSubmit={onAddText} />
         </div>
       </aside>
       <div className="download">
         <PrimaryButton
-          onClick={download.onClick}
           label="Download"
+          onClick={download.onClick}
           disabled={download.disabled}
         />
       </div>

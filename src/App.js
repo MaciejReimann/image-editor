@@ -36,7 +36,7 @@ class App extends Component {
     }
   };
 
-  handleLogoDrag = newLogo =>
+  handleAddingLogo = newLogo =>
     this.setState({
       projectData: {
         ...this.state.projectData,
@@ -45,7 +45,6 @@ class App extends Component {
     });
 
   updateProjectView = view => {
-    console.log(view);
     this.setState({ projectView: view });
   };
 
@@ -62,12 +61,12 @@ class App extends Component {
         <AppLayout
           logosURLs={this.state.logosURLs}
           projectData={this.state.projectData}
-          onProjectViewUpdate={this.updateProjectView}
+          onUpdateProjectView={this.updateProjectView}
           download={{
             disabled: Boolean(!this.state.projectView),
             onClick: this.handleDownLoadClick
           }}
-          onDragEnd={this.handleLogoDrag}
+          onAddLogo={this.handleAddingLogo}
           onAddText={this.handleAddingText}
           contextMenu={this.handleEditingText}
         />

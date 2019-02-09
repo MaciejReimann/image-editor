@@ -39,6 +39,7 @@ export default class EditorWindow extends Component {
   };
 
   render() {
+    const { background, texts, logos } = this.props.projectData;
     return (
       <div className="Editor">
         <Stage
@@ -49,8 +50,8 @@ export default class EditorWindow extends Component {
             this.stageRef = node;
           }}
         >
-          <BackgroundImage image={this.props.background} />
-          {this.props.texts.map((text, i) => (
+          <BackgroundImage image={background} />
+          {texts.map((text, i) => (
             <TextField
               stageWidth={this.props.stageWidth}
               stageHeight={this.props.stageHeight}
@@ -64,7 +65,7 @@ export default class EditorWindow extends Component {
               key={text.value + i}
             />
           ))}
-          {this.props.logos.map((logo, i) => (
+          {logos.map((logo, i) => (
             <LogoContainer logo={logo} key={i} />
           ))}
         </Stage>
