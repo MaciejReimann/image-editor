@@ -4,12 +4,14 @@ import "../styles/EditorWindow.css";
 
 import TextField from "../logic/TextField";
 import BackgroundImage from "./BackgroundImage";
+import ContextMenu from ".//ContextMenu";
 
 export default class EditorWindow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      textDragged: ""
+      textDragged: "",
+      isShowingContextMenu: false
     };
   }
 
@@ -31,6 +33,10 @@ export default class EditorWindow extends Component {
 
   handleTextDragEnd = () => {
     this.setState({ textDragged: "" });
+  };
+
+  toggleShowingContextMenu = e => {
+    this.setState({ isShowingContextMenu: !this.state.isShowingContextMenu });
   };
 
   render() {
@@ -55,25 +61,27 @@ export default class EditorWindow extends Component {
           <Layer>
             <BackgroundImage url={backgroundImageURL} />
           </Layer>
-          <Layer>
-            {textsAdded.map((text, i) => (
-              <TextField
-                width={width}
-                height={height}
-                text={text.value}
-                fontFamily={text.font}
-                draggable
-                onDragStart={e => this.handleTextDragStart(e)}
-                onDragEnd={this.handleTextDragEnd}
-                onMouseOver={e => this.handleHoverText(e)}
-                shadowOffset={{ x: 1, y: 1 }}
-                shadowOpacity={0.5}
-                shadowEnabled={this.state.textDragged === text.value}
-                key={text.value + i}
-              />
-            ))}
-          </Layer>
+          {textsAdded.map((text, i) => (
+            <TextField
+              width={width}
+              height={height}
+              text={text.value}
+              fontFamily={text.font}
+              draggable
+              onShowContextMenu={this.toggleShowingContextMenu}
+              onDragStart={e => this.handleTextDragStart(e)}
+              onDragEnd={this.handleTextDragEnd}
+              onMouseOver={e => this.handleHoverText(e)}
+              shadowOffset={{ x: 1, y: 1 }}
+              shadowOpacity={0.5}
+              shadowEnabled={this.state.textDragged === text.value}
+              key={text.value + i}
+            />
+          ))}
         </Stage>
+        {this.state.isShowingContextMenu && (
+          <ContextMenu options={[{ name: "Delete" }]} />
+        )}
       </div>
     );
   }
