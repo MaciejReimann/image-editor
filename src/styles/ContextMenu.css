@@ -20,4 +20,5 @@
 
 .ContextMenu > .options > .option:hover {
   background: rgba(0, 0, 0, 0.2);
+  font-weight: bold;
 }

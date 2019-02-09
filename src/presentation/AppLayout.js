@@ -16,7 +16,8 @@ export default function AppLayout({
   onDownloadClick,
   downloadDisabled,
   onAddText,
-  textsAdded
+  textsAdded,
+  handleContextMenuOptionClick
 }) {
   return (
     <div className="layout">
@@ -32,6 +33,7 @@ export default function AppLayout({
           draggedImageURL={draggedImageURL}
           width={400}
           height={400}
+          handleContextMenuOptionClick={handleContextMenuOptionClick}
         />
       </main>
       <aside className="tools-menu">

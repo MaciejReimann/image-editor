@@ -55,7 +55,8 @@ export default class EditorWindow extends Component {
       width,
       height,
       // draggedImageURL,
-      backgroundImageURL
+      backgroundImageURL,
+      handleContextMenuOptionClick
     } = this.props;
 
     return (
@@ -96,7 +97,7 @@ export default class EditorWindow extends Component {
               x: this.state.contextMenuPosition.x,
               y: this.state.contextMenuPosition.y
             }}
-            onOptionClick={this.handleContextMenuOptionClick}
+            onOptionClick={handleContextMenuOptionClick}
           />
         )}
       </div>

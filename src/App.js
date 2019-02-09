@@ -47,6 +47,10 @@ class App extends Component {
   handleAddText = text =>
     this.setState({ textsAdded: [...this.state.textsAdded, text] });
 
+  handleContextMenuOptionClick = option => {
+    console.log(option);
+  };
+
   render() {
     return (
       <div className="App">
@@ -60,6 +64,7 @@ class App extends Component {
           downloadDisabled={Boolean(!this.state.projectState)}
           onAddText={this.handleAddText}
           textsAdded={this.state.textsAdded}
+          handleContextMenuOptionClick={this.handleContextMenuOptionClick}
         />
       </div>
     );
