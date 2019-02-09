@@ -3,6 +3,7 @@ import { Stage } from "react-konva";
 import "../styles/EditorWindow.css";
 import hasObjectChanged from "../helpers/hasObjectChanged";
 import TextField from "../logic/TextField";
+import LogoContainer from "../logic/LogoContainer";
 import BackgroundImage from "./BackgroundImage";
 import ContextMenu from ".//ContextMenu";
 
@@ -11,7 +12,6 @@ export default class EditorWindow extends Component {
     super(props);
     this.state = {
       textDragged: "",
-      imageDragged: null,
       contextMenuPosition: null
     };
   }
@@ -38,33 +38,22 @@ export default class EditorWindow extends Component {
     });
   };
 
-  handleContextMenuOptionClick = option => {
-    console.log(option);
-  };
-
   render() {
-    console.log(this.props);
-    const {
-      textsAdded,
-      stageWidth,
-      stageHeight,
-      // draggedImageURL,
-      handleContextMenuOptionClick
-    } = this.props;
-
     return (
       <div className="Editor">
         <Stage
-          width={stageWidth}
-          height={stageHeight}
           className="Editor"
-          ref={node => (this.stageRef = node)}
+          width={this.props.stageWidth}
+          height={this.props.stageHeight}
+          ref={node => {
+            this.stageRef = node;
+          }}
         >
           <BackgroundImage image={this.props.background} />
           {this.props.texts.map((text, i) => (
             <TextField
-              stageWidth={stageWidth}
-              stageHeight={stageHeight}
+              stageWidth={this.props.stageWidth}
+              stageHeight={this.props.stageHeight}
               text={text.value}
               fontFamily={text.font}
               draggable
@@ -75,17 +64,20 @@ export default class EditorWindow extends Component {
               key={text.value + i}
             />
           ))}
+          {this.props.logos.map((logo, i) => (
+            <LogoContainer logo={logo} key={i} />
+          ))}
         </Stage>
-        {/* {this.state.contextMenuPosition && (
+        {this.state.contextMenuPosition && (
           <ContextMenu
             options={[{ name: "Delete" }]}
             position={{
               x: this.state.contextMenuPosition.x,
               y: this.state.contextMenuPosition.y
             }}
-            onOptionClick={handleContextMenuOptionClick}
+            onOptionClick={this.props.contextMenu}
           />
-        )} */}
+        )}
       </div>
     );
   }

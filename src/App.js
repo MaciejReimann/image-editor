@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import AppLayout from "./presentation/AppLayout";
 import downloadURI from "./helpers/downloadURI";
-import preloadImage from "./helpers/preloadImage";
 import "./styles/App.css";
 
 class App extends Component {
@@ -17,21 +16,37 @@ class App extends Component {
         name: "MyProject",
         background: "/assets/empty_background.bmp",
         texts: [],
-        images: []
+        logos: []
       },
-      projectView: null,
-      draggedImageURL: ""
+      projectView: null
     };
   }
 
-  updateProjectView = data => {
-    console.log(data);
-    // this.setState({ projectData: data });
+  handleAddingText = newText =>
+    this.setState({
+      projectData: {
+        ...this.state.projectData,
+        texts: [...this.state.projectData.texts, newText]
+      }
+    });
+
+  handleEditingText = option => {
+    if (option === "Delete") {
+      console.log(option);
+    }
   };
 
-  handleLogoDrag = (e, url) => {
-    // this.setState({ draggedImageURL: url });
-    // console.log(e.target);
+  handleLogoDrag = newLogo =>
+    this.setState({
+      projectData: {
+        ...this.state.projectData,
+        logos: [...this.state.projectData.logos, newLogo]
+      }
+    });
+
+  updateProjectView = view => {
+    console.log(view);
+    this.setState({ projectView: view });
   };
 
   handleDownLoadClick = () => {
@@ -41,27 +56,20 @@ class App extends Component {
     }
   };
 
-  handleAddText = text =>
-    this.setState({ textsAdded: [...this.state.textsAdded, text] });
-
-  handleContextMenuOptionClick = option => {
-    console.log(option);
-  };
-
   render() {
     return (
       <div className="App">
         <AppLayout
           logosURLs={this.state.logosURLs}
           projectData={this.state.projectData}
-          onStageUpdate={this.updateProjectView}
-          // draggedImageURL={this.state.draggedImageURL}
-          // onDragEnd={this.handleLogoDrag}
-          onDownloadClick={this.handleDownLoadClick}
-          downloadDisabled={Boolean(!this.state.projectState)}
-          // onAddText={this.handleAddText}
-          // textsAdded={this.state.textsAdded}
-          // handleContextMenuOptionClick={this.handleContextMenuOptionClick}
+          onProjectViewUpdate={this.updateProjectView}
+          download={{
+            disabled: Boolean(!this.state.projectView),
+            onClick: this.handleDownLoadClick
+          }}
+          onDragEnd={this.handleLogoDrag}
+          onAddText={this.handleAddingText}
+          contextMenu={this.handleEditingText}
         />
       </div>
     );

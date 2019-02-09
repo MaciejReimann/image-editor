@@ -1,26 +1,19 @@
 import React from "react";
-
 import BackgroundMenu from "./BackgroundMenu";
 import EditorWindow from "./EditorWindow";
 import LogoMenu from "./LogoMenu";
 import TextMenu from "./TextMenu";
-
 import PrimaryButton from "../generic/PrimaryButton";
 import "../styles/Layout.css";
 
 export default function AppLayout({
   logosURLs,
   projectData,
-  onStageUpdate,
-
+  onProjectViewUpdate,
+  download,
   onDragEnd,
-  // draggedImageURL,
-  onDownloadClick,
-  downloadDisabled,
-  onAddText
-  // textsAdded,
-
-  // handleContextMenuOptionClick
+  onAddText,
+  contextMenu
 }) {
   return (
     <div className="layout">
@@ -32,24 +25,24 @@ export default function AppLayout({
         <EditorWindow
           background={projectData.background}
           texts={projectData.texts}
-          onStageUpdate={onStageUpdate}
-          // draggedImageURL={draggedImageURL}
+          logos={projectData.logos}
+          onStageUpdate={onProjectViewUpdate}
           stageWidth={400}
           stageHeight={400}
-          // handleContextMenuOptionClick={handleContextMenuOptionClick}
+          contextMenu={contextMenu}
         />
       </main>
       <aside className="tools-menu ToolsMenu">
         <div className="ToolsMenu">
           <LogoMenu logos={logosURLs} onDragEnd={onDragEnd} />
-          <TextMenu textInputtedHas={onAddText} />
+          <TextMenu onSubmit={onAddText} />
         </div>
       </aside>
       <div className="download">
         <PrimaryButton
-          onClick={onDownloadClick}
+          onClick={download.onClick}
           label="Download"
-          disabled={downloadDisabled}
+          disabled={download.disabled}
         />
       </div>
       <div className="save-load">

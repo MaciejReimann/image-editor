@@ -17,7 +17,7 @@ export default class TextMenu extends Component {
     const { inputtedText, fontSelected } = this.state;
     e.preventDefault();
     if (inputtedText.trim().length) {
-      this.props.textInputtedHas({ value: inputtedText, font: fontSelected });
+      this.props.onSubmit({ value: inputtedText, font: fontSelected });
       this.setState({ inputtedText: "" });
     }
   };
