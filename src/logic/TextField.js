@@ -40,7 +40,6 @@ export default class TextField extends Component {
           fill={this.props.fill}
           fontSize={this.props.fontSize}
           draggable
-          onClick={() => this.props.onClick(this.props.id, this.textRef)}
           onDragStart={() => this.props.onDrag(this.props.id)}
           onDragEnd={() => {
             this.props.onDragEnd({
@@ -50,6 +49,7 @@ export default class TextField extends Component {
             });
             this.props.onDrag(null);
           }}
+          onClick={() => this.props.onClick(this.props.id, this.textRef)}
           onMouseEnter={() => (document.body.style.cursor = "pointer")}
           onMouseLeave={() => (document.body.style.cursor = "default")}
           shadowOffset={this.props.shadowOffset}

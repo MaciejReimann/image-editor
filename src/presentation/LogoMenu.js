@@ -9,7 +9,7 @@ export default function LogoMenu({ logosURLs, onDragEnd }) {
       <div className="logos">
         {logosURLs.map(url => (
           <Thumbnail
-            onDragEnd={() => onDragEnd(url)}
+            onDragEnd={() => onDragEnd({ url })}
             className="Logo"
             src={url}
             alt="logo"

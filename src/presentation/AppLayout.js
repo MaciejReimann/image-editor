@@ -10,9 +10,10 @@ export default function AppLayout({
   appData,
   onUpdateProjectView,
   download,
-  onAddLogo,
   onAddText,
+  onAddLogo,
   onMoveText,
+  onMoveLogo,
   contextMenu
 }) {
   return (
@@ -28,6 +29,7 @@ export default function AppLayout({
           stageWidth={400}
           stageHeight={400}
           onMoveText={onMoveText}
+          onMoveLogo={onMoveLogo}
           contextMenu={contextMenu}
         />
       </main>

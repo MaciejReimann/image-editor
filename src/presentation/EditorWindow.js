@@ -3,22 +3,22 @@ import { Stage } from "react-konva";
 import "../styles/EditorWindow.css";
 import hasObjectChanged from "../helpers/hasObjectChanged";
 import TextField from "../logic/TextField";
-import LogoContainer from "../logic/LogoContainer";
+import LogoField from "../logic/LogoField";
 import BackgroundImage from "./BackgroundImage";
-import ContextMenu from ".//ContextMenu";
+import ContextMenu from "./ContextMenu";
 
 export default class EditorWindow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      draggedTextId: null,
-      clickedTextId: null,
+      draggedFieldId: null,
+      clickedFieldId: null,
       contextMenuPosition: null
     };
   }
 
   shouldComponentUpdate = (nextProps, nextState) =>
-    hasObjectChanged(this.props, nextProps) ||
+    hasObjectChanged(this.props.projectData, nextProps.projectData) ||
     hasObjectChanged(this.state, nextState);
 
   componentDidUpdate = prevProps => {
@@ -28,12 +28,12 @@ export default class EditorWindow extends Component {
     this.props.onStageUpdate(this.stageRef);
   };
 
-  handleTextClick = (clickedTextId, el) => {
+  handleFieldClick = (clickedFieldId, el) => {
     console.log(el);
-    this.setState({ clickedTextId });
+    this.setState({ clickedFieldId });
   };
 
-  handleDrag = draggedTextId => this.setState({ draggedTextId });
+  handleDrag = draggedFieldId => this.setState({ draggedFieldId });
 
   toggleShowingContextMenu = ({ x, y }) =>
     this.setState({
@@ -56,24 +56,32 @@ export default class EditorWindow extends Component {
             image={background}
             onContextMenu={() => this.setState({ contextMenuPosition: null })}
           />
-          {texts.map((text, i) => (
+          {texts.map(text => (
             <TextField
               id={text.id}
-              stageWidth={this.props.stageWidth}
-              stageHeight={this.props.stageHeight}
               text={text.text}
               fontFamily={text.fontFamily}
+              stageWidth={this.props.stageWidth}
+              stageHeight={this.props.stageHeight}
               draggable
-              onClick={this.handleTextClick}
-              onShowContextMenu={this.toggleShowingContextMenu}
               onDrag={this.handleDrag}
               onDragEnd={this.props.onMoveText}
-              shadowEnabled={this.state.draggedTextId === text.id}
+              onClick={this.handleFieldClick}
+              onShowContextMenu={this.toggleShowingContextMenu}
+              shadowEnabled={this.state.draggedFieldId === text.id}
               key={text.id}
             />
           ))}
-          {logos.map((logo, i) => (
-            <LogoContainer logo={logo} key={i} />
+          {logos.map(logo => (
+            <LogoField
+              id={logo.id}
+              image={logo.url}
+              key={logo.id}
+              draggable
+              onDrag={this.handleDrag}
+              onDragEnd={this.props.onMoveLogo}
+              // onClick={this.handleFieldClick}
+            />
           ))}
         </Stage>
         {this.state.contextMenuPosition && (
@@ -83,7 +91,7 @@ export default class EditorWindow extends Component {
               x: this.state.contextMenuPosition.x,
               y: this.state.contextMenuPosition.y
             }}
-            onOptionClick={this.props.contextMenu(this.state.clickedTextId)}
+            onOptionClick={this.props.contextMenu(this.state.clickedFieldId)}
           />
         )}
       </div>

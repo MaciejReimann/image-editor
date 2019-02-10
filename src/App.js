@@ -25,29 +25,26 @@ class App extends Component {
     };
   }
 
-  handleMovingText = item => {
-    const { texts } = this.state.projectData;
+  handleAdd = (category, name) => newItem => {
     this.setState({
       projectData: {
         ...this.state.projectData,
-        texts: updateItemById(texts, item)
-      }
-    });
-    // console.log(item);
-  };
-
-  handleAddingText = newText => {
-    const { texts } = this.state.projectData;
-    this.setState({
-      projectData: {
-        ...this.state.projectData,
-        texts: [
-          ...texts,
+        [name]: [
+          ...category,
           {
-            ...newText,
-            id: lastItemOf(texts) ? lastItemOf(texts).id + 1 : 0
+            ...newItem,
+            id: lastItemOf(category) ? lastItemOf(category).id + 1 : name
           }
         ]
+      }
+    });
+  };
+
+  handleMove = (category, name) => item => {
+    this.setState({
+      projectData: {
+        ...this.state.projectData,
+        [name]: updateItemById(category, item)
       }
     });
   };
@@ -62,14 +59,6 @@ class App extends Component {
       });
     } // place for other context menu options (EDIT? RESIZE?)
   };
-
-  handleAddingLogo = newLogo =>
-    this.setState({
-      projectData: {
-        ...this.state.projectData,
-        logos: [...this.state.projectData.logos, newLogo]
-      }
-    });
 
   updateProjectView = projectView => this.setState({ projectView });
 
@@ -93,9 +82,12 @@ class App extends Component {
             disabled: Boolean(!this.state.projectView),
             onClick: this.handleDownLoadClick
           }}
-          onAddLogo={this.handleAddingLogo}
-          onAddText={this.handleAddingText}
-          onMoveText={this.handleMovingText}
+          onAddText={this.handleAdd(this.state.projectData.texts, "texts")}
+          onAddLogo={this.handleAdd(this.state.projectData.logos, "logos")}
+          //
+          onMoveText={this.handleMove(this.state.projectData.texts, "texts")}
+          onMoveLogo={this.handleMove(this.state.projectData.logos, "logos")}
+          //
           contextMenu={this.handleEditingText}
         />
       </div>

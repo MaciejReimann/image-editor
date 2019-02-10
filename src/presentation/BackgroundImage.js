@@ -17,11 +17,7 @@ export default class BackgroundImage extends Component {
   render() {
     return (
       <Layer>
-        <Image
-          image={this.state.image}
-          onContextMenu={this.props.onContextMenu}
-          onClick={this.props.onContextMenu}
-        />
+        <Image image={this.state.image} />
       </Layer>
     );
   }
