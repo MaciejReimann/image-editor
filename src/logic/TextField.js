@@ -11,6 +11,7 @@ export default class TextField extends Component {
   }
   static defaultProps = {
     color: "red",
+    fontSize: 20,
     shadowOffset: { x: 1, y: 1 },
     shadowOpacity: 0.5
   };
@@ -22,13 +23,23 @@ export default class TextField extends Component {
     });
   }
 
-  onShowContextMenu = e => {
-    e.evt.preventDefault();
-    this.props.onShowContextMenu(e);
-  };
+  onClick = () => this.props.onClick(this.props.text);
 
   onMouseEnter = () => (document.body.style.cursor = "pointer");
+
   onMouseLeave = () => (document.body.style.cursor = "default");
+
+  onDragStart = () => this.props.onDrag(this.props.text);
+
+  onDragEnd = () => this.props.onDrag("");
+
+  onShowContextMenu = e => {
+    e.evt.preventDefault();
+    this.props.onShowContextMenu({
+      x: e.evt.pageX - this.props.stageWidth / 2,
+      y: e.evt.pageY + 12
+    });
+  };
 
   render() {
     return (
@@ -39,10 +50,11 @@ export default class TextField extends Component {
           text={this.props.text}
           fontFamily={this.props.font}
           fill={this.props.color}
-          fontSize={20}
+          fontSize={this.props.fontSize}
           draggable
-          onDragStart={e => this.props.onDragStart(e)}
-          onDragEnd={this.props.onDragEnd}
+          onClick={this.onClick}
+          onDragStart={this.onDragStart}
+          onDragEnd={this.onDragEnd}
           onMouseEnter={this.onMouseEnter}
           onMouseLeave={this.onMouseLeave}
           shadowOffset={this.props.shadowOffset}

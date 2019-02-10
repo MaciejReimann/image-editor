@@ -30,10 +30,11 @@ class App extends Component {
       }
     });
 
-  handleEditingText = option => {
-    if (option === "Delete") {
-      console.log(option);
-    }
+  handleEditingText = option => text => {
+    console.log(option, text);
+    // if (option === "Delete") {
+    //   console.log(option);
+    // }
   };
 
   handleAddingLogo = newLogo =>

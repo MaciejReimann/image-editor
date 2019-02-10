@@ -22,21 +22,16 @@ export default class EditorWindow extends Component {
 
   componentDidUpdate = () => this.props.onStageUpdate(this.stageRef);
 
-  handleTextDragStart = e => {
-    this.setState({ textDragged: e.target.attrs.text });
+  handleTextClick = text => {
+    console.log(text);
   };
 
-  handleTextDragEnd = () => {
-    this.setState({ textDragged: "" });
-  };
+  handleDrag = textDragged => this.setState({ textDragged });
 
-  toggleShowingContextMenu = e => {
+  toggleShowingContextMenu = ({ x, y }) =>
     this.setState({
-      contextMenuPosition: this.state.contextMenuPosition
-        ? null
-        : { x: e.evt.pageX - this.props.stageWidth / 2, y: e.evt.pageY + 12 }
+      contextMenuPosition: this.state.contextMenuPosition ? null : { x, y }
     });
-  };
 
   render() {
     const { background, texts, logos } = this.props.projectData;
@@ -58,9 +53,9 @@ export default class EditorWindow extends Component {
               text={text.value}
               font={text.font}
               draggable
-              onShowContextMenu={e => this.toggleShowingContextMenu(e)}
-              onDragStart={e => this.handleTextDragStart(e)}
-              onDragEnd={this.handleTextDragEnd}
+              onClick={this.handleTextClick}
+              onShowContextMenu={this.toggleShowingContextMenu}
+              onDrag={this.handleDrag}
               shadowEnabled={this.state.textDragged === text.value}
               key={text.value + i}
             />
@@ -76,7 +71,7 @@ export default class EditorWindow extends Component {
               x: this.state.contextMenuPosition.x,
               y: this.state.contextMenuPosition.y
             }}
-            onOptionClick={this.props.contextMenu}
+            onOptionClick={textClicked => this.props.contextMenu(textClicked)()}
           />
         )}
       </div>
