@@ -33,7 +33,7 @@ export default function AppLayout({
       </main>
       <aside className="tools-menu ToolsMenu">
         <div className="ToolsMenu">
-          <LogoMenu logos={appData.logosURLs} onDragEnd={onAddLogo} />
+          <LogoMenu logosURLs={appData.logosURLs} onDragEnd={onAddLogo} />
           <TextMenu onSubmit={onAddText} />
         </div>
       </aside>
