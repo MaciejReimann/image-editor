@@ -18,8 +18,8 @@ export default class TextField extends Component {
 
   componentDidMount() {
     this.setState({
-      textWidth: this.textRef.getTextWidth(),
-      textHeight: this.textRef.getTextHeight()
+      textWidth: this.ref.getTextWidth(),
+      textHeight: this.ref.getTextHeight()
     });
   }
 
@@ -44,12 +44,12 @@ export default class TextField extends Component {
           onDragEnd={() => {
             this.props.onDragEnd({
               ...this.props,
-              x: this.textRef.attrs.x,
-              y: this.textRef.attrs.y
+              x: this.ref.attrs.x,
+              y: this.ref.attrs.y
             });
             this.props.onDrag(null);
           }}
-          onClick={() => this.props.onClick(this.props.id, this.textRef)}
+          onClick={() => this.props.onClick(this.props.id, this.ref)}
           onMouseEnter={() => (document.body.style.cursor = "pointer")}
           onMouseLeave={() => (document.body.style.cursor = "default")}
           shadowOffset={this.props.shadowOffset}
@@ -63,7 +63,7 @@ export default class TextField extends Component {
             });
           }}
           ref={node => {
-            this.textRef = node;
+            this.ref = node;
           }}
         />
       </Layer>

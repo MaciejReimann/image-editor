@@ -76,11 +76,15 @@ export default class EditorWindow extends Component {
             <LogoField
               id={logo.id}
               image={logo.url}
-              key={logo.id}
+              stageWidth={this.props.stageWidth}
+              stageHeight={this.props.stageHeight}
               draggable
               onDrag={this.handleDrag}
               onDragEnd={this.props.onMoveLogo}
-              // onClick={this.handleFieldClick}
+              onClick={this.handleFieldClick}
+              onShowContextMenu={this.toggleShowingContextMenu}
+              shadowEnabled={this.state.draggedFieldId === logo.id}
+              key={logo.id}
             />
           ))}
         </Stage>

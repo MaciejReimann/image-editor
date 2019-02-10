@@ -33,22 +33,33 @@ export default class LogoField extends Component {
           image={this.state.image}
           width={this.props.width}
           height={this.props.height}
+          x={this.props.x || 0}
+          y={this.props.y || 0}
           draggable
           onDragStart={() => this.props.onDrag(this.props.id)}
           onDragEnd={() => {
             this.props.onDragEnd({
               ...this.props,
-              x: this.textRef.attrs.x,
-              y: this.textRef.attrs.y
+              x: this.ref.attrs.x,
+              y: this.ref.attrs.y
             });
             this.props.onDrag(null);
           }}
-          //
-          // onClick={() => this.props.onClick(this.props.id, this.textRef)}
-          // onMouseEnter={() => (document.body.style.cursor = "pointer")}
-          // onMouseLeave={() => (document.body.style.cursor = "default")}
+          onClick={() => this.props.onClick(this.props.id, this.ref)}
+          onMouseEnter={() => (document.body.style.cursor = "pointer")}
+          onMouseLeave={() => (document.body.style.cursor = "default")}
+          shadowOffset={this.props.shadowOffset}
+          shadowOpacity={this.props.shadowOpacity}
+          shadowEnabled={this.props.shadowEnabled}
+          onContextMenu={e => {
+            e.evt.preventDefault();
+            this.props.onShowContextMenu({
+              x: e.evt.pageX - this.props.stageWidth / 2,
+              y: e.evt.pageY + this.props.height / 2 + 5
+            });
+          }}
           ref={node => {
-            this.textRef = node;
+            this.ref = node;
           }}
         />
       </Layer>
