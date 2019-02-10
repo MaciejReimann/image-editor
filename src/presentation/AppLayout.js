@@ -7,8 +7,7 @@ import PrimaryButton from "../generic/PrimaryButton";
 import "../styles/Layout.css";
 
 export default function AppLayout({
-  logosURLs,
-  projectData,
+  appData,
   onUpdateProjectView,
   download,
   onAddLogo,
@@ -23,7 +22,7 @@ export default function AppLayout({
       </aside>
       <main className="editor-window">
         <EditorWindow
-          projectData={projectData}
+          projectData={appData.projectData}
           onStageUpdate={onUpdateProjectView}
           stageWidth={400}
           stageHeight={400}
@@ -32,7 +31,7 @@ export default function AppLayout({
       </main>
       <aside className="tools-menu ToolsMenu">
         <div className="ToolsMenu">
-          <LogoMenu logos={logosURLs} onDragEnd={onAddLogo} />
+          <LogoMenu logos={appData.logosURLs} onDragEnd={onAddLogo} />
           <TextMenu onSubmit={onAddText} />
         </div>
       </aside>

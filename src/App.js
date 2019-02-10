@@ -68,8 +68,10 @@ class App extends Component {
     return (
       <div className="App">
         <AppLayout
-          logosURLs={this.state.logosURLs}
-          projectData={this.state.projectData}
+          appData={{
+            logosURLs: this.state.logosURLs,
+            projectData: this.state.projectData
+          }}
           onUpdateProjectView={this.updateProjectView}
           download={{
             disabled: Boolean(!this.state.projectView),
