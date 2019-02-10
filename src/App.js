@@ -7,6 +7,7 @@ import {
   lastItemOf
 } from "./helpers";
 import AppLayout from "./presentation/AppLayout";
+import saveToDB from "./db/saveToDB";
 import "./styles/App.css";
 
 export default class App extends Component {
@@ -91,6 +92,10 @@ export default class App extends Component {
           //
           onEditText={this.handleEdit(this.state.projectData.texts, "texts")}
           onEditLogo={this.handleEdit(this.state.projectData.logos, "logos")}
+          //
+          db={{
+            saveToDB
+          }}
         />
       </div>
     );
