@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import AppLayout from "./presentation/AppLayout";
-import downloadURI from "./helpers/downloadURI";
-import deleteItemById from "./helpers/deleteItemById";
-import lastItemOf from "./helpers/lastItemOf";
+import { downloadURI, deleteItemById, lastItemOf } from "./helpers";
 import "./styles/App.css";
 
 class App extends Component {
