@@ -49,12 +49,12 @@ class App extends Component {
     });
   };
 
-  handleEditingText = textId => option => {
+  handleEdit = (category, name) => item => option => {
     if (option === "Delete") {
       this.setState({
         projectData: {
           ...this.state.projectData,
-          texts: deleteItemById(this.state.projectData.texts, textId)
+          [name]: deleteItemById(category, item)
         }
       });
     } // place for other context menu options (EDIT? RESIZE?)
@@ -88,7 +88,8 @@ class App extends Component {
           onMoveText={this.handleMove(this.state.projectData.texts, "texts")}
           onMoveLogo={this.handleMove(this.state.projectData.logos, "logos")}
           //
-          contextMenu={this.handleEditingText}
+          onEditText={this.handleEdit(this.state.projectData.texts, "texts")}
+          onEditLogo={this.handleEdit(this.state.projectData.logos, "logos")}
         />
       </div>
     );

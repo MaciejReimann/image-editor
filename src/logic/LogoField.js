@@ -55,7 +55,8 @@ export default class LogoField extends Component {
             e.evt.preventDefault();
             this.props.onShowContextMenu({
               x: e.evt.pageX - this.props.stageWidth / 2,
-              y: e.evt.pageY + this.props.height / 2 + 5
+              y: e.evt.pageY + this.props.height / 2 + 5,
+              category: "logo"
             });
           }}
           ref={node => {

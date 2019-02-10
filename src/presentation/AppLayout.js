@@ -14,7 +14,8 @@ export default function AppLayout({
   onAddLogo,
   onMoveText,
   onMoveLogo,
-  contextMenu
+  onEditText,
+  onEditLogo
 }) {
   return (
     <div className="layout">
@@ -30,7 +31,8 @@ export default function AppLayout({
           stageHeight={400}
           onMoveText={onMoveText}
           onMoveLogo={onMoveLogo}
-          contextMenu={contextMenu}
+          onEditText={onEditText}
+          onEditLogo={onEditLogo}
         />
       </main>
       <aside className="tools-menu ToolsMenu">

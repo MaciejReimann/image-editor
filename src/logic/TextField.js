@@ -59,7 +59,8 @@ export default class TextField extends Component {
             e.evt.preventDefault();
             this.props.onShowContextMenu({
               x: e.evt.pageX - this.props.stageWidth / 2,
-              y: e.evt.pageY + 12
+              y: e.evt.pageY + 12,
+              category: "text"
             });
           }}
           ref={node => {

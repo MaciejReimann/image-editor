@@ -13,7 +13,8 @@ export default class EditorWindow extends Component {
     this.state = {
       draggedFieldId: null,
       clickedFieldId: null,
-      contextMenuPosition: null
+      contextMenuPosition: null,
+      category: ""
     };
   }
 
@@ -28,16 +29,14 @@ export default class EditorWindow extends Component {
     this.props.onStageUpdate(this.stageRef);
   };
 
-  handleFieldClick = (clickedFieldId, el) => {
-    console.log(el);
-    this.setState({ clickedFieldId });
-  };
+  handleFieldClick = clickedFieldId => this.setState({ clickedFieldId });
 
   handleDrag = draggedFieldId => this.setState({ draggedFieldId });
 
-  toggleShowingContextMenu = ({ x, y }) =>
+  toggleShowingContextMenu = ({ x, y, category }) =>
     this.setState({
-      contextMenuPosition: this.state.contextMenuPosition ? null : { x, y }
+      contextMenuPosition: this.state.contextMenuPosition ? null : { x, y },
+      category
     });
 
   render() {
@@ -95,7 +94,12 @@ export default class EditorWindow extends Component {
               x: this.state.contextMenuPosition.x,
               y: this.state.contextMenuPosition.y
             }}
-            onOptionClick={this.props.contextMenu(this.state.clickedFieldId)}
+            onOptionClick={
+              (this.state.category === "text" &&
+                this.props.onEditText(this.state.clickedFieldId)) ||
+              (this.state.category === "logo" &&
+                this.props.onEditLogo(this.state.clickedFieldId))
+            }
           />
         )}
       </div>
