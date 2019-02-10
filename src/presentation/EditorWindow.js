@@ -19,9 +19,14 @@ export default class EditorWindow extends Component {
 
   shouldComponentUpdate = (nextProps, nextState) =>
     hasObjectChanged(this.props, nextProps) ||
-    hasObjectChanged(this.state, nextState); // this is unnnecessary once text and image position is written into a model
+    hasObjectChanged(this.state, nextState);
 
-  componentDidUpdate = () => this.props.onStageUpdate(this.stageRef);
+  componentDidUpdate = prevProps => {
+    if (hasObjectChanged(prevProps, this.props)) {
+      this.setState({ contextMenuPosition: null });
+    }
+    this.props.onStageUpdate(this.stageRef);
+  };
 
   handleTextClick = clickedTextId => this.setState({ clickedTextId });
 
@@ -44,7 +49,10 @@ export default class EditorWindow extends Component {
             this.stageRef = node;
           }}
         >
-          <BackgroundImage image={background} />
+          <BackgroundImage
+            image={background}
+            onContextMenu={() => this.setState({ contextMenuPosition: null })}
+          />
           {texts.map((text, i) => (
             <TextField
               id={text.id}
