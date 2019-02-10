@@ -1,8 +1,8 @@
 import React from "react";
+import EditorContainer from "../logic/EditorContainer";
+import TextMenuContainer from "../logic/TextMenuContainer";
 import BackgroundMenu from "./BackgroundMenu";
-import EditorWindow from "./EditorWindow";
 import LogoMenu from "./LogoMenu";
-import TextMenu from "./TextMenu";
 import PrimaryButton from "../generic/PrimaryButton";
 import "../styles/Layout.css";
 
@@ -24,7 +24,7 @@ export default function AppLayout({
         <BackgroundMenu />
       </aside>
       <main className="editor-window">
-        <EditorWindow
+        <EditorContainer
           projectData={appData.projectData}
           onStageUpdate={onUpdateProjectView}
           stageWidth={400}
@@ -38,7 +38,7 @@ export default function AppLayout({
       <aside className="tools-menu ToolsMenu">
         <div className="ToolsMenu">
           <LogoMenu logosURLs={appData.logosURLs} onDragEnd={onAddLogo} />
-          <TextMenu onSubmit={onAddText} />
+          <TextMenuContainer onSubmit={onAddText} />
         </div>
       </aside>
       <div className="download">

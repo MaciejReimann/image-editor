@@ -7,10 +7,9 @@ import {
   lastItemOf
 } from "./helpers";
 import AppLayout from "./presentation/AppLayout";
-
 import "./styles/App.css";
 
-class App extends Component {
+export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -82,6 +81,8 @@ class App extends Component {
             disabled: Boolean(!this.state.projectView),
             onClick: this.handleDownLoadClick
           }}
+          // TODO: "texts" / "logos" could be possibly passed as arguments
+          // lower down, when there is a component with "category" in its state
           onAddText={this.handleAdd(this.state.projectData.texts, "texts")}
           onAddLogo={this.handleAdd(this.state.projectData.logos, "logos")}
           //
@@ -95,5 +96,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;

@@ -2,17 +2,17 @@ import React, { Component } from "react";
 import { Stage } from "react-konva";
 import "../styles/EditorWindow.css";
 import hasObjectChanged from "../helpers/hasObjectChanged";
-import TextField from "../logic/TextField";
-import LogoField from "../logic/LogoField";
-import BackgroundImage from "./BackgroundImage";
-import ContextMenu from "./ContextMenu";
+import TextContainer from "./TextContainer";
+import LogoContainer from "./LogoContainer";
+import BackgroundImage from "../presentation/BackgroundImage";
+import ContextMenu from "../presentation/ContextMenu";
 
 export default class EditorWindow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      draggedFieldId: null,
-      clickedFieldId: null,
+      draggedItemId: null,
+      clickedItemId: null,
       contextMenuPosition: null,
       category: ""
     };
@@ -29,18 +29,19 @@ export default class EditorWindow extends Component {
     this.props.onStageUpdate(this.stageRef);
   };
 
-  handleFieldClick = clickedFieldId => this.setState({ clickedFieldId });
-
-  handleDrag = draggedFieldId => this.setState({ draggedFieldId });
-
-  toggleShowingContextMenu = ({ x, y, category }) =>
-    this.setState({
-      contextMenuPosition: this.state.contextMenuPosition ? null : { x, y },
-      category
-    });
-
   render() {
     const { background, texts, logos } = this.props.projectData;
+    const commonProps = {
+      stageWidth: this.props.stageWidth,
+      stageHeight: this.props.stageHeight,
+      onDrag: draggedItemId => this.setState({ draggedItemId }),
+      onClick: clickedItemId => this.setState({ clickedItemId }),
+      onShowContextMenu: ({ x, y, category }) =>
+        this.setState({
+          contextMenuPosition: this.state.contextMenuPosition ? null : { x, y },
+          category
+        })
+    };
     return (
       <div className="Editor">
         <Stage
@@ -56,34 +57,24 @@ export default class EditorWindow extends Component {
             onContextMenu={() => this.setState({ contextMenuPosition: null })}
           />
           {texts.map(text => (
-            <TextField
+            <TextContainer
+              key={text.id}
               id={text.id}
               text={text.text}
               fontFamily={text.fontFamily}
-              stageWidth={this.props.stageWidth}
-              stageHeight={this.props.stageHeight}
-              draggable
-              onDrag={this.handleDrag}
+              {...commonProps}
               onDragEnd={this.props.onMoveText}
-              onClick={this.handleFieldClick}
-              onShowContextMenu={this.toggleShowingContextMenu}
-              shadowEnabled={this.state.draggedFieldId === text.id}
-              key={text.id}
+              shadowEnabled={this.state.draggedItemId === text.id}
             />
           ))}
           {logos.map(logo => (
-            <LogoField
+            <LogoContainer
+              key={logo.id}
               id={logo.id}
               image={logo.url}
-              stageWidth={this.props.stageWidth}
-              stageHeight={this.props.stageHeight}
-              draggable
-              onDrag={this.handleDrag}
+              {...commonProps}
               onDragEnd={this.props.onMoveLogo}
-              onClick={this.handleFieldClick}
-              onShowContextMenu={this.toggleShowingContextMenu}
-              shadowEnabled={this.state.draggedFieldId === logo.id}
-              key={logo.id}
+              shadowEnabled={this.state.draggedItemId === logo.id}
             />
           ))}
         </Stage>
@@ -96,9 +87,9 @@ export default class EditorWindow extends Component {
             }}
             onOptionClick={
               (this.state.category === "text" &&
-                this.props.onEditText(this.state.clickedFieldId)) ||
+                this.props.onEditText(this.state.clickedItemId)) ||
               (this.state.category === "logo" &&
-                this.props.onEditLogo(this.state.clickedFieldId))
+                this.props.onEditLogo(this.state.clickedItemId))
             }
           />
         )}
