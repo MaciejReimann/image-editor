@@ -23,24 +23,6 @@ export default class TextField extends Component {
     });
   }
 
-  onClick = () => this.props.onClick(this.props.id);
-
-  onMouseEnter = () => (document.body.style.cursor = "pointer");
-
-  onMouseLeave = () => (document.body.style.cursor = "default");
-
-  onDragStart = () => this.props.onDrag(this.props.id);
-
-  onDragEnd = () => this.props.onDrag("");
-
-  onShowContextMenu = e => {
-    e.evt.preventDefault();
-    this.props.onShowContextMenu({
-      x: e.evt.pageX - this.props.stageWidth / 2,
-      y: e.evt.pageY + 12
-    });
-  };
-
   render() {
     return (
       <Layer>
@@ -53,15 +35,21 @@ export default class TextField extends Component {
           fill={this.props.color}
           fontSize={this.props.fontSize}
           draggable
-          onClick={this.onClick}
-          onDragStart={this.onDragStart}
-          onDragEnd={this.onDragEnd}
-          onMouseEnter={this.onMouseEnter}
-          onMouseLeave={this.onMouseLeave}
+          onClick={() => this.props.onClick(this.props.id)}
+          onDragStart={() => this.props.onDrag(this.props.id)}
+          onDragEnd={() => this.props.onDrag("")}
+          onMouseEnter={() => (document.body.style.cursor = "pointer")}
+          onMouseLeave={() => (document.body.style.cursor = "default")}
           shadowOffset={this.props.shadowOffset}
           shadowOpacity={this.props.shadowOpacity}
           shadowEnabled={this.props.shadowEnabled}
-          onContextMenu={e => this.onShowContextMenu(e)}
+          onContextMenu={e => {
+            e.evt.preventDefault();
+            this.props.onShowContextMenu({
+              x: e.evt.pageX - this.props.stageWidth / 2,
+              y: e.evt.pageY + 12
+            });
+          }}
           ref={node => {
             this.textRef = node;
           }}
