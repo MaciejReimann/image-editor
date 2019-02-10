@@ -1,20 +1,18 @@
 import React, { Component } from "react";
-import AppLayout from "./presentation/AppLayout";
+import { logosURLs, emptyBackgroundURL } from "./assets";
 import { downloadURI, deleteItemById, lastItemOf } from "./helpers";
+import AppLayout from "./presentation/AppLayout";
+
 import "./styles/App.css";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      logosURLs: [
-        "./assets/logo_one.png",
-        "./assets/logo_two.png",
-        "./assets/logo_three.png"
-      ],
+      logosURLs,
       projectData: {
         name: "MyProject",
-        background: "/assets/empty_background.bmp",
+        background: emptyBackgroundURL,
         texts: [],
         logos: []
       },
@@ -57,9 +55,7 @@ class App extends Component {
       }
     });
 
-  updateProjectView = view => {
-    this.setState({ projectView: view });
-  };
+  updateProjectView = projectView => this.setState({ projectView });
 
   handleDownLoadClick = () => {
     if (this.state.projectView) {
