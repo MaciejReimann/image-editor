@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import AppLayout from "./presentation/AppLayout";
 import downloadURI from "./helpers/downloadURI";
+import deleteItemById from "./helpers/deleteItemById";
+import lastItemOf from "./helpers/lastItemOf";
 import "./styles/App.css";
 
 class App extends Component {
@@ -22,19 +24,31 @@ class App extends Component {
     };
   }
 
-  handleAddingText = newText =>
+  handleAddingText = newText => {
+    const { texts } = this.state.projectData;
     this.setState({
       projectData: {
         ...this.state.projectData,
-        texts: [...this.state.projectData.texts, newText]
+        texts: [
+          ...texts,
+          {
+            ...newText,
+            id: lastItemOf(texts) ? lastItemOf(texts).id + 1 : 0
+          }
+        ]
       }
     });
+  };
 
-  handleEditingText = option => text => {
-    console.log(option, text);
-    // if (option === "Delete") {
-    //   console.log(option);
-    // }
+  handleEditingText = textId => option => {
+    if (option === "Delete") {
+      this.setState({
+        projectData: {
+          ...this.state.projectData,
+          texts: deleteItemById(this.state.projectData.texts, textId)
+        }
+      });
+    } // place for other context menu options (EDIT? RESIZE?)
   };
 
   handleAddingLogo = newLogo =>

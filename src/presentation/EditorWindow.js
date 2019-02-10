@@ -12,6 +12,7 @@ export default class EditorWindow extends Component {
     super(props);
     this.state = {
       textDragged: "",
+      clickedTextId: null,
       contextMenuPosition: null
     };
   }
@@ -22,9 +23,7 @@ export default class EditorWindow extends Component {
 
   componentDidUpdate = () => this.props.onStageUpdate(this.stageRef);
 
-  handleTextClick = text => {
-    console.log(text);
-  };
+  handleTextClick = clickedTextId => this.setState({ clickedTextId });
 
   handleDrag = textDragged => this.setState({ textDragged });
 
@@ -48,6 +47,7 @@ export default class EditorWindow extends Component {
           <BackgroundImage image={background} />
           {texts.map((text, i) => (
             <TextField
+              id={text.id}
               stageWidth={this.props.stageWidth}
               stageHeight={this.props.stageHeight}
               text={text.value}
@@ -71,7 +71,7 @@ export default class EditorWindow extends Component {
               x: this.state.contextMenuPosition.x,
               y: this.state.contextMenuPosition.y
             }}
-            onOptionClick={textClicked => this.props.contextMenu(textClicked)()}
+            onOptionClick={this.props.contextMenu(this.state.clickedTextId)}
           />
         )}
       </div>

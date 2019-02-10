@@ -23,13 +23,13 @@ export default class TextField extends Component {
     });
   }
 
-  onClick = () => this.props.onClick(this.props.text);
+  onClick = () => this.props.onClick(this.props.id);
 
   onMouseEnter = () => (document.body.style.cursor = "pointer");
 
   onMouseLeave = () => (document.body.style.cursor = "default");
 
-  onDragStart = () => this.props.onDrag(this.props.text);
+  onDragStart = () => this.props.onDrag(this.props.id);
 
   onDragEnd = () => this.props.onDrag("");
 
@@ -45,6 +45,7 @@ export default class TextField extends Component {
     return (
       <Layer>
         <Text
+          id={this.props.id}
           x={this.props.stageWidth / 2 - this.state.textWidth / 2}
           y={this.props.stageHeight / 2 - this.state.textHeight / 2}
           text={this.props.text}
