@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layer, Rect, Text } from "react-konva";
+import { Layer, Text } from "react-konva";
 
 export default class TextField extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ export default class TextField extends Component {
   static defaultProps = {
     color: "red",
     fontSize: 20,
-    shadowOffset: { x: 1, y: 1 },
+    shadowOffset: { x: 1.5, y: 1.5 },
     shadowOpacity: 0.5
   };
 
@@ -35,9 +35,9 @@ export default class TextField extends Component {
           fill={this.props.color}
           fontSize={this.props.fontSize}
           draggable
-          onClick={() => this.props.onClick(this.props.id)}
+          onClick={() => this.props.onClick(this.props.id, this.textRef)}
           onDragStart={() => this.props.onDrag(this.props.id)}
-          onDragEnd={() => this.props.onDrag("")}
+          onDragEnd={() => this.props.onDrag(null)}
           onMouseEnter={() => (document.body.style.cursor = "pointer")}
           onMouseLeave={() => (document.body.style.cursor = "default")}
           shadowOffset={this.props.shadowOffset}

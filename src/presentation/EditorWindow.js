@@ -11,7 +11,7 @@ export default class EditorWindow extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      textDragged: "",
+      draggedTextId: null,
       clickedTextId: null,
       contextMenuPosition: null
     };
@@ -28,9 +28,12 @@ export default class EditorWindow extends Component {
     this.props.onStageUpdate(this.stageRef);
   };
 
-  handleTextClick = clickedTextId => this.setState({ clickedTextId });
+  handleTextClick = (clickedTextId, el) => {
+    console.log(el);
+    this.setState({ clickedTextId });
+  };
 
-  handleDrag = textDragged => this.setState({ textDragged });
+  handleDrag = draggedTextId => this.setState({ draggedTextId });
 
   toggleShowingContextMenu = ({ x, y }) =>
     this.setState({
@@ -64,7 +67,7 @@ export default class EditorWindow extends Component {
               onClick={this.handleTextClick}
               onShowContextMenu={this.toggleShowingContextMenu}
               onDrag={this.handleDrag}
-              shadowEnabled={this.state.textDragged === text.value}
+              shadowEnabled={this.state.draggedTextId === text.id}
               key={text.value + i}
             />
           ))}
