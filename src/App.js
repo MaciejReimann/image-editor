@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { logosURLs, emptyBackgroundURL } from "./assets";
-import { downloadURI, deleteItemById, lastItemOf } from "./helpers";
+import {
+  downloadURI,
+  deleteItemById,
+  updateItemById,
+  lastItemOf
+} from "./helpers";
 import AppLayout from "./presentation/AppLayout";
 
 import "./styles/App.css";
@@ -19,6 +24,17 @@ class App extends Component {
       projectView: null
     };
   }
+
+  handleMovingText = item => {
+    const { texts } = this.state.projectData;
+    this.setState({
+      projectData: {
+        ...this.state.projectData,
+        texts: updateItemById(texts, item)
+      }
+    });
+    // console.log(item);
+  };
 
   handleAddingText = newText => {
     const { texts } = this.state.projectData;
@@ -79,6 +95,7 @@ class App extends Component {
           }}
           onAddLogo={this.handleAddingLogo}
           onAddText={this.handleAddingText}
+          onMoveText={this.handleMovingText}
           contextMenu={this.handleEditingText}
         />
       </div>

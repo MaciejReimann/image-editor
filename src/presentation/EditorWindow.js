@@ -61,14 +61,15 @@ export default class EditorWindow extends Component {
               id={text.id}
               stageWidth={this.props.stageWidth}
               stageHeight={this.props.stageHeight}
-              text={text.value}
-              font={text.font}
+              text={text.text}
+              fontFamily={text.fontFamily}
               draggable
               onClick={this.handleTextClick}
               onShowContextMenu={this.toggleShowingContextMenu}
               onDrag={this.handleDrag}
+              onDragEnd={this.props.onMoveText}
               shadowEnabled={this.state.draggedTextId === text.id}
-              key={text.value + i}
+              key={text.id}
             />
           ))}
           {logos.map((logo, i) => (

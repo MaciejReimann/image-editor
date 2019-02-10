@@ -7,43 +7,37 @@ export default class TextMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputtedText: "",
-      fontSelected: "Arial",
+      text: "",
+      fontFamily: "Arial",
       availableFonts: ["Arial", "Times New Roman", "Open Sans"]
     };
   }
 
   handleSubmit = e => {
-    const { inputtedText, fontSelected } = this.state;
+    const { text, fontFamily } = this.state;
     e.preventDefault();
-    if (inputtedText.trim().length) {
-      this.props.onSubmit({ value: inputtedText, font: fontSelected });
-      this.setState({ inputtedText: "" });
+    if (text.trim().length) {
+      this.props.onSubmit({ text, fontFamily });
+      this.setState({ text: "" });
     }
   };
 
-  handleRadioChange = e => this.setState({ fontSelected: e.target.value });
+  handleRadioChange = e => this.setState({ fontFamily: e.target.value });
 
-  handleInputChange = e => {
-    this.setState({ inputtedText: e.target.value });
-  };
+  handleInputChange = e => this.setState({ text: e.target.value });
 
   render() {
-    const { inputtedText, fontSelected, availableFonts } = this.state;
+    const { text, fontFamily, availableFonts } = this.state;
     return (
       <form className="TextMenu" onSubmit={this.handleSubmit}>
         <div>Add Text</div>
-        <input
-          onChange={this.handleInputChange}
-          type="text"
-          value={inputtedText}
-        />
+        <input onChange={this.handleInputChange} type="text" value={text} />
         <div className="radios">
           {availableFonts.map(font => (
             <RadioInput
               value={font}
               onChange={this.handleRadioChange}
-              checked={fontSelected === font}
+              checked={fontFamily === font}
               key={font}
             />
           ))}

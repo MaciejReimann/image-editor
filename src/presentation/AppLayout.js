@@ -12,6 +12,7 @@ export default function AppLayout({
   download,
   onAddLogo,
   onAddText,
+  onMoveText,
   contextMenu
 }) {
   return (
@@ -26,6 +27,7 @@ export default function AppLayout({
           onStageUpdate={onUpdateProjectView}
           stageWidth={400}
           stageHeight={400}
+          onMoveText={onMoveText}
           contextMenu={contextMenu}
         />
       </main>

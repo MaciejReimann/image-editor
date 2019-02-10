@@ -10,7 +10,7 @@ export default class TextField extends Component {
     };
   }
   static defaultProps = {
-    color: "red",
+    fill: "red",
     fontSize: 20,
     shadowOffset: { x: 1.5, y: 1.5 },
     shadowOpacity: 0.5
@@ -28,16 +28,28 @@ export default class TextField extends Component {
       <Layer>
         <Text
           id={this.props.id}
-          x={this.props.stageWidth / 2 - this.state.textWidth / 2}
-          y={this.props.stageHeight / 2 - this.state.textHeight / 2}
+          x={
+            this.props.x || this.props.stageWidth / 2 - this.state.textWidth / 2
+          }
+          y={
+            this.props.y ||
+            this.props.stageHeight / 2 - this.state.textHeight / 2
+          }
           text={this.props.text}
-          fontFamily={this.props.font}
-          fill={this.props.color}
+          fontFamily={this.props.fontFamily}
+          fill={this.props.fill}
           fontSize={this.props.fontSize}
           draggable
           onClick={() => this.props.onClick(this.props.id, this.textRef)}
           onDragStart={() => this.props.onDrag(this.props.id)}
-          onDragEnd={() => this.props.onDrag(null)}
+          onDragEnd={() => {
+            this.props.onDragEnd({
+              ...this.props,
+              x: this.textRef.attrs.x,
+              y: this.textRef.attrs.y
+            });
+            this.props.onDrag(null);
+          }}
           onMouseEnter={() => (document.body.style.cursor = "pointer")}
           onMouseLeave={() => (document.body.style.cursor = "default")}
           shadowOffset={this.props.shadowOffset}
