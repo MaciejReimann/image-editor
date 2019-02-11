@@ -1,10 +1,10 @@
-import { openDb, deleteDb } from "idb";
+import { openDb } from "idb";
 
 const dbPromise = openDb("editor-store", 1, upgradeDB => {
   upgradeDB.createObjectStore("editor");
 });
 
-const idbKeyval = {
+const idb = {
   async get(key) {
     const db = await dbPromise;
     return db
@@ -37,14 +37,18 @@ const idbKeyval = {
   }
 };
 
+let version = 0;
+
 function set(projectName, data) {
-  idbKeyval.set(projectName, JSON.stringify(data));
-  console.log("Saving to DB");
+  idb.set(`${projectName}_${version}`, JSON.stringify(data));
+  console.log("Saving to DB, version: ", version);
+  version++;
 }
 
 function get(projectName, callback) {
-  idbKeyval.get(projectName).then(val => callback(JSON.parse(val)));
-  console.log("Loading from DB");
+  let v = `${projectName}_${version - 1}`;
+  idb.get(v).then(val => callback(JSON.parse(val)));
+  console.log("Loading from DB: ", v);
 }
 
 const db = { set, get };

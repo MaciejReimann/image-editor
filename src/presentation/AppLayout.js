@@ -16,8 +16,7 @@ export default function AppLayout({
   onMoveLogo,
   onEditText,
   onEditLogo,
-  dbSet,
-  dbGet
+  db
 }) {
   return (
     <div className="layout">
@@ -51,8 +50,8 @@ export default function AppLayout({
         />
       </div>
       <div className="save-load">
-        <PrimaryButton label="Save" onClick={dbSet} />
-        <PrimaryButton label="Load" onClick={dbGet} />
+        <PrimaryButton label="Save" onClick={db.set} />
+        <PrimaryButton label="Load" onClick={db.get} />
       </div>
     </div>
   );

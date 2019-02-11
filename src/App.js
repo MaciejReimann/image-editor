@@ -9,6 +9,7 @@ import {
 import AppLayout from "./presentation/AppLayout";
 import db from "./db";
 import "./styles/App.css";
+import equal from "deep-equal";
 
 export default class App extends Component {
   constructor(props) {
@@ -24,6 +25,13 @@ export default class App extends Component {
       projectView: null
     };
   }
+  // shouldComponentUpdate = (nextProps, nextState) => {
+  //   // const prevTexts = this.state.projectData.texts;
+  //   // const prevLogos = this.state.projectData.logos;
+  //   // const nextTexts = nextState.projectData.texts;
+  //   // const nextLogos = nextState.projectData.logos;
+  //   // return prevLogos.some((logo, i) => !equal((logo, nextLogos[i])));
+  // };
 
   handleAdd = (category, name) => newItem => {
     this.setState({
@@ -95,10 +103,14 @@ export default class App extends Component {
           onEditText={this.handleEdit(texts, "texts")}
           onEditLogo={this.handleEdit(logos, "logos")}
           //
-          dbSet={() => db.set(name, projectData)}
-          dbGet={() =>
-            db.get(name, projectData => this.setState({ projectData }))
-          }
+          db={{
+            set: () => db.set(name, projectData),
+            get: () =>
+              db.get(name, data => {
+                console.log(data);
+                this.setState({ projectData: data });
+              })
+          }}
         />
       </div>
     );
