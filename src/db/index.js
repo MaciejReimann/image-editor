@@ -32,8 +32,10 @@ const idb = {
   },
   async keys() {
     const db = await dbPromise;
-    return db.transaction("editor").objectStore("editor");
-    // .getAllKeys(key);
+    return db
+      .transaction("editor")
+      .objectStore("editor")
+      .getAllKeys();
   }
 };
 
@@ -48,13 +50,19 @@ function set(projectName, data, callback) {
 }
 
 function get(projectName, callback) {
-  let v = `${projectName}_${version - 1}`;
-  idb.get(v).then(val => {
+  idb.get(projectName).then(val => {
     callback(JSON.parse(val));
-    console.log("Loading from DB: ", v);
+    console.log("Loading from DB: ", JSON.parse(val));
   });
 }
 
-const db = { set, get };
+function getAllKeys(callback) {
+  idb.keys().then(all => {
+    callback(all);
+    console.log("Getting all keys from DB: ", all);
+  });
+}
+
+const db = { set, get, getAllKeys };
 
 export default db;

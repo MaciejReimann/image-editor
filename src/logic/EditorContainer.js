@@ -18,15 +18,18 @@ export default class EditorWindow extends Component {
     };
   }
 
-  shouldComponentUpdate = (nextProps, nextState) =>
-    hasObjectChanged(this.props.projectData, nextProps.projectData) ||
-    hasObjectChanged(this.state, nextState);
+  // shouldComponentUpdate = (nextProps, nextState) =>
+  //   // hasObjectChanged(this.props.projectData, nextProps.projectData) ||
+  //   hasObjectChanged(this.state, nextState);
 
   componentDidUpdate = prevProps => {
     if (hasObjectChanged(prevProps, this.props)) {
       this.setState({ contextMenuPosition: null });
+    } else if (
+      hasObjectChanged(prevProps.projectData, this.props.projectData)
+    ) {
+      this.props.onStageUpdate(this.stageRef);
     }
-    this.props.onStageUpdate(this.stageRef);
   };
 
   render() {
@@ -42,6 +45,8 @@ export default class EditorWindow extends Component {
           category
         })
     };
+
+    console.log(logos);
     return (
       <div className="Editor">
         <Stage

@@ -24,8 +24,18 @@ export default class App extends Component {
       },
       projectView: null,
       saved: false,
-      savedLastMove: false
+      savedLastMove: false,
+      savedVersions: []
     };
+  }
+
+  componentDidMount() {
+    // this.pullFromDB();
+    db.getAllKeys(savedVersions =>
+      db.get(lastItemOf(savedVersions), projectData =>
+        this.setState({ projectData, savedVersions })
+      )
+    );
   }
 
   componentDidUpdate() {
@@ -36,6 +46,16 @@ export default class App extends Component {
       );
     }
   }
+
+  pushToDB = () =>
+    db.set(this.state.projectData.name, this.state.projectData, () =>
+      this.setState({ saved: true })
+    );
+
+  pullFromDB = () =>
+    db.get(this.state.projectData.name, projectData =>
+      this.setState({ projectData })
+    );
 
   handleAdd = (category, name) => newItem => {
     this.setState({
@@ -88,7 +108,7 @@ export default class App extends Component {
 
   render() {
     const { projectData, logosURLs, projectView, saved } = this.state;
-    const { texts, logos, name } = projectData;
+    const { texts, logos } = projectData;
     return (
       <div className="App">
         <AppLayout
@@ -113,10 +133,8 @@ export default class App extends Component {
           onEditLogo={this.handleEdit(logos, "logos")}
           //
           db={{
-            set: () =>
-              db.set(name, projectData, () => this.setState({ saved: true })),
-            get: () =>
-              db.get(name, projectData => this.setState({ projectData })),
+            set: this.pushToDB,
+            get: this.pullFromDB,
             saved
           }}
         />
