@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Stage } from "react-konva";
-import equal from "deep-equal";
 import hasObjectChanged from "../helpers/hasObjectChanged";
 import "../styles/EditorWindow.css";
 import TextContainer from "./TextContainer";

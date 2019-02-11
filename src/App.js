@@ -6,6 +6,7 @@ import {
   updateItemById,
   lastItemOf
 } from "./helpers";
+
 import AppLayout from "./presentation/AppLayout";
 import db from "./db";
 import "./styles/App.css";
@@ -22,12 +23,23 @@ export default class App extends Component {
         logos: []
       },
       projectView: null,
-      saved: false
+      saved: false,
+      savedLastMove: false
     };
+  }
+
+  componentDidUpdate() {
+    if (!this.state.savedLastMove) {
+      this.setState({ savedLastMove: true });
+      db.set(this.state.projectData.name, this.state.projectData, () =>
+        this.setState({ saved: true })
+      );
+    }
   }
 
   handleAdd = (category, name) => newItem => {
     this.setState({
+      savedLastMove: false,
       projectData: {
         ...this.state.projectData,
         [name]: [
@@ -43,6 +55,7 @@ export default class App extends Component {
 
   handleMove = (category, name) => item => {
     this.setState({
+      savedLastMove: false,
       projectData: {
         ...this.state.projectData,
         [name]: updateItemById(category, item)
@@ -53,6 +66,7 @@ export default class App extends Component {
   handleEdit = (category, name) => item => option => {
     if (option === "Delete") {
       this.setState({
+        savedLastMove: false,
         projectData: {
           ...this.state.projectData,
           [name]: deleteItemById(category, item)
@@ -61,7 +75,9 @@ export default class App extends Component {
     } // place for other context menu options (EDIT? RESIZE?)
   };
 
-  updateProjectView = projectView => this.setState({ projectView });
+  updateProjectView = projectView => {
+    this.setState({ projectView });
+  };
 
   handleDownLoadClick = () => {
     if (this.state.projectView) {
@@ -73,7 +89,6 @@ export default class App extends Component {
   render() {
     const { projectData, logosURLs, projectView, saved } = this.state;
     const { texts, logos, name } = projectData;
-    console.log(Boolean(!projectView));
     return (
       <div className="App">
         <AppLayout
@@ -88,7 +103,6 @@ export default class App extends Component {
           }}
           // TODO: "texts" / "logos" could be possibly passed as arguments
           // lower down, when there is a component with "category" in its state
-
           onAddText={this.handleAdd(texts, "texts")}
           onAddLogo={this.handleAdd(logos, "logos")}
           //
