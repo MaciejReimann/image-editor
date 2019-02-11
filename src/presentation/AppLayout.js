@@ -9,6 +9,7 @@ import "../styles/Layout.css";
 export default function AppLayout({
   appData,
   onUpdateProjectView,
+
   download,
   onAddText,
   onAddLogo,

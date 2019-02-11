@@ -9,7 +9,6 @@ import {
 import AppLayout from "./presentation/AppLayout";
 import db from "./db";
 import "./styles/App.css";
-import equal from "deep-equal";
 
 export default class App extends Component {
   constructor(props) {
@@ -25,13 +24,6 @@ export default class App extends Component {
       projectView: null
     };
   }
-  // shouldComponentUpdate = (nextProps, nextState) => {
-  //   // const prevTexts = this.state.projectData.texts;
-  //   // const prevLogos = this.state.projectData.logos;
-  //   // const nextTexts = nextState.projectData.texts;
-  //   // const nextLogos = nextState.projectData.logos;
-  //   // return prevLogos.some((logo, i) => !equal((logo, nextLogos[i])));
-  // };
 
   handleAdd = (category, name) => newItem => {
     this.setState({
@@ -80,6 +72,7 @@ export default class App extends Component {
   render() {
     const { projectData, logosURLs, projectView } = this.state;
     const { texts, logos, name } = projectData;
+    console.log(Boolean(!projectView));
     return (
       <div className="App">
         <AppLayout
@@ -94,6 +87,7 @@ export default class App extends Component {
           }}
           // TODO: "texts" / "logos" could be possibly passed as arguments
           // lower down, when there is a component with "category" in its state
+
           onAddText={this.handleAdd(texts, "texts")}
           onAddLogo={this.handleAdd(logos, "logos")}
           //

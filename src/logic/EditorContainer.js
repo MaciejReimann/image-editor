@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Stage } from "react-konva";
 import equal from "deep-equal";
+import hasObjectChanged from "../helpers/hasObjectChanged";
 import "../styles/EditorWindow.css";
 import TextContainer from "./TextContainer";
 import LogoContainer from "./LogoContainer";
@@ -18,10 +19,15 @@ export default class EditorWindow extends Component {
     };
   }
 
+  shouldComponentUpdate = (nextProps, nextState) =>
+    hasObjectChanged(this.props.projectData, nextProps.projectData) ||
+    hasObjectChanged(this.state, nextState);
+
   componentDidUpdate = prevProps => {
-    if (!equal(prevProps, this.props)) {
+    if (hasObjectChanged(prevProps, this.props)) {
       this.setState({ contextMenuPosition: null });
     }
+    this.props.onStageUpdate(this.stageRef);
   };
 
   render() {
