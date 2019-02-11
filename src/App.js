@@ -21,7 +21,8 @@ export default class App extends Component {
         texts: [],
         logos: []
       },
-      projectView: null
+      projectView: null,
+      saved: false
     };
   }
 
@@ -70,7 +71,7 @@ export default class App extends Component {
   };
 
   render() {
-    const { projectData, logosURLs, projectView } = this.state;
+    const { projectData, logosURLs, projectView, saved } = this.state;
     const { texts, logos, name } = projectData;
     console.log(Boolean(!projectView));
     return (
@@ -98,12 +99,11 @@ export default class App extends Component {
           onEditLogo={this.handleEdit(logos, "logos")}
           //
           db={{
-            set: () => db.set(name, projectData),
+            set: () =>
+              db.set(name, projectData, () => this.setState({ saved: true })),
             get: () =>
-              db.get(name, data => {
-                console.log(data);
-                this.setState({ projectData: data });
-              })
+              db.get(name, projectData => this.setState({ projectData })),
+            saved
           }}
         />
       </div>

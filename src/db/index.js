@@ -39,16 +39,20 @@ const idb = {
 
 let version = 0;
 
-function set(projectName, data) {
-  idb.set(`${projectName}_${version}`, JSON.stringify(data));
-  console.log("Saving to DB, version: ", version);
-  version++;
+function set(projectName, data, callback) {
+  idb.set(`${projectName}_${version}`, JSON.stringify(data)).then(() => {
+    console.log("Saving to DB, version: ", version);
+    callback();
+    version++;
+  });
 }
 
 function get(projectName, callback) {
   let v = `${projectName}_${version - 1}`;
-  idb.get(v).then(val => callback(JSON.parse(val)));
-  console.log("Loading from DB: ", v);
+  idb.get(v).then(val => {
+    callback(JSON.parse(val));
+    console.log("Loading from DB: ", v);
+  });
 }
 
 const db = { set, get };

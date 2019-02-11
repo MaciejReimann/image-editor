@@ -9,7 +9,6 @@ import "../styles/Layout.css";
 export default function AppLayout({
   appData,
   onUpdateProjectView,
-
   download,
   onAddText,
   onAddLogo,
@@ -52,7 +51,7 @@ export default function AppLayout({
       </div>
       <div className="save-load">
         <PrimaryButton label="Save" onClick={db.set} />
-        <PrimaryButton label="Load" onClick={db.get} />
+        <PrimaryButton label="Load" onClick={db.get} disabled={!db.saved} />
       </div>
     </div>
   );
