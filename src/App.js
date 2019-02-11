@@ -7,7 +7,9 @@ import {
   lastItemOf
 } from "./helpers";
 import AppLayout from "./presentation/AppLayout";
+import db from "./db";
 import "./styles/App.css";
+import equal from "deep-equal";
 
 export default class App extends Component {
   constructor(props) {
@@ -23,6 +25,13 @@ export default class App extends Component {
       projectView: null
     };
   }
+  // shouldComponentUpdate = (nextProps, nextState) => {
+  //   // const prevTexts = this.state.projectData.texts;
+  //   // const prevLogos = this.state.projectData.logos;
+  //   // const nextTexts = nextState.projectData.texts;
+  //   // const nextLogos = nextState.projectData.logos;
+  //   // return prevLogos.some((logo, i) => !equal((logo, nextLogos[i])));
+  // };
 
   handleAdd = (category, name) => newItem => {
     this.setState({
@@ -69,28 +78,39 @@ export default class App extends Component {
   };
 
   render() {
+    const { projectData, logosURLs, projectView } = this.state;
+    const { texts, logos, name } = projectData;
     return (
       <div className="App">
         <AppLayout
           appData={{
-            logosURLs: this.state.logosURLs,
-            projectData: this.state.projectData
+            logosURLs,
+            projectData
           }}
           onUpdateProjectView={this.updateProjectView}
           download={{
-            disabled: Boolean(!this.state.projectView),
+            disabled: Boolean(!projectView),
             onClick: this.handleDownLoadClick
           }}
           // TODO: "texts" / "logos" could be possibly passed as arguments
           // lower down, when there is a component with "category" in its state
-          onAddText={this.handleAdd(this.state.projectData.texts, "texts")}
-          onAddLogo={this.handleAdd(this.state.projectData.logos, "logos")}
+          onAddText={this.handleAdd(texts, "texts")}
+          onAddLogo={this.handleAdd(logos, "logos")}
           //
-          onMoveText={this.handleMove(this.state.projectData.texts, "texts")}
-          onMoveLogo={this.handleMove(this.state.projectData.logos, "logos")}
+          onMoveText={this.handleMove(texts, "texts")}
+          onMoveLogo={this.handleMove(logos, "logos")}
           //
-          onEditText={this.handleEdit(this.state.projectData.texts, "texts")}
-          onEditLogo={this.handleEdit(this.state.projectData.logos, "logos")}
+          onEditText={this.handleEdit(texts, "texts")}
+          onEditLogo={this.handleEdit(logos, "logos")}
+          //
+          db={{
+            set: () => db.set(name, projectData),
+            get: () =>
+              db.get(name, data => {
+                console.log(data);
+                this.setState({ projectData: data });
+              })
+          }}
         />
       </div>
     );

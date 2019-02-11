@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Stage } from "react-konva";
+import equal from "deep-equal";
 import "../styles/EditorWindow.css";
-import hasObjectChanged from "../helpers/hasObjectChanged";
 import TextContainer from "./TextContainer";
 import LogoContainer from "./LogoContainer";
 import BackgroundImage from "../presentation/BackgroundImage";
@@ -18,15 +18,10 @@ export default class EditorWindow extends Component {
     };
   }
 
-  shouldComponentUpdate = (nextProps, nextState) =>
-    hasObjectChanged(this.props.projectData, nextProps.projectData) ||
-    hasObjectChanged(this.state, nextState);
-
   componentDidUpdate = prevProps => {
-    if (hasObjectChanged(prevProps, this.props)) {
+    if (!equal(prevProps, this.props)) {
       this.setState({ contextMenuPosition: null });
     }
-    this.props.onStageUpdate(this.stageRef);
   };
 
   render() {
@@ -60,6 +55,8 @@ export default class EditorWindow extends Component {
             <TextContainer
               key={text.id}
               id={text.id}
+              x={text.x}
+              y={text.y}
               text={text.text}
               fontFamily={text.fontFamily}
               {...commonProps}
@@ -71,6 +68,8 @@ export default class EditorWindow extends Component {
             <LogoContainer
               key={logo.id}
               id={logo.id}
+              x={logo.x}
+              y={logo.y}
               image={logo.url}
               {...commonProps}
               onDragEnd={this.props.onMoveLogo}
