@@ -7,7 +7,7 @@ import {
   lastItemOf
 } from "./helpers";
 import AppLayout from "./presentation/AppLayout";
-import saveToDB from "./db/saveToDB";
+import db from "./db";
 import "./styles/App.css";
 
 export default class App extends Component {
@@ -70,32 +70,35 @@ export default class App extends Component {
   };
 
   render() {
+    const { projectData, logosURLs, projectView } = this.state;
+    const { texts, logos, name } = projectData;
     return (
       <div className="App">
         <AppLayout
           appData={{
-            logosURLs: this.state.logosURLs,
-            projectData: this.state.projectData
+            logosURLs,
+            projectData
           }}
           onUpdateProjectView={this.updateProjectView}
           download={{
-            disabled: Boolean(!this.state.projectView),
+            disabled: Boolean(!projectView),
             onClick: this.handleDownLoadClick
           }}
           // TODO: "texts" / "logos" could be possibly passed as arguments
           // lower down, when there is a component with "category" in its state
-          onAddText={this.handleAdd(this.state.projectData.texts, "texts")}
-          onAddLogo={this.handleAdd(this.state.projectData.logos, "logos")}
+          onAddText={this.handleAdd(texts, "texts")}
+          onAddLogo={this.handleAdd(logos, "logos")}
           //
-          onMoveText={this.handleMove(this.state.projectData.texts, "texts")}
-          onMoveLogo={this.handleMove(this.state.projectData.logos, "logos")}
+          onMoveText={this.handleMove(texts, "texts")}
+          onMoveLogo={this.handleMove(logos, "logos")}
           //
-          onEditText={this.handleEdit(this.state.projectData.texts, "texts")}
-          onEditLogo={this.handleEdit(this.state.projectData.logos, "logos")}
+          onEditText={this.handleEdit(texts, "texts")}
+          onEditLogo={this.handleEdit(logos, "logos")}
           //
-          db={{
-            saveToDB
-          }}
+          dbSet={() => db.set(name, projectData)}
+          dbGet={() =>
+            db.get(name, projectData => this.setState({ projectData }))
+          }
         />
       </div>
     );
